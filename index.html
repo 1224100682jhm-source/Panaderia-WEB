@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulces Delicias- Inicio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#FAF6E9] text-stone-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Navegación -->
+    <header class="bg-[#FFFDF5] border-b border-[#F3E8C9] sticky top-0 z-50">
+        <div class="mx-auto flex max-w-7xl items-center justify-between p-4">
+            <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
+
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-[#D97706] font-bold border-b-2 border-[#D97706] pb-1">Inicio</a>
+                <a href="catalogo.html" class="text-stone-600 hover:text-[#D97706] transition">Catálogo</a>
+                <a href="categorias.html" class="text-stone-600 hover:text-[#D97706] transition">Categorías</a>
+                <a href="promociones.html" class="text-stone-600 hover:text-[#D97706] transition">Promociones 🏷️</a>
+            </nav>
+
+            <a href="carrito.html" class="flex items-center gap-2 rounded-lg bg-[#D97706] px-4 py-2 text-sm font-semibold text-white hover:bg-[#B45309] transition">
+                🛒 Mi Carrito <span class="bg-white text-[#D97706] text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="bg-gradient-to-r from-[#FEF3C7] via-[#FFFDF5] to-[#FEF3C7] border-b border-[#F3E8C9] py-12 px-4">
+        <div class="mx-auto max-w-7xl grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <span class="bg-[#FEE2E2] text-[#DC2626] text-xs font-bold px-3 py-1 rounded-full uppercase">Oferta Especial</span>
+                <h1 class="text-4xl font-extrabold text-[#512B11] mt-3 leading-tight">Pan recién horneado todos los días</h1>
+                <p class="text-stone-600 mt-2 text-sm">Explora nuestra variedad artesanal y haz tu pedido directamente en línea.</p>
+                <div class="mt-6 flex gap-3">
+                    <a href="catalogo.html" class="rounded-lg bg-[#D97706] px-5 py-2.5 text-sm font-bold text-white shadow hover:bg-[#B45309]">Ver Catálogo</a>
+                    <a href="promociones.html" class="rounded-lg bg-white border border-[#D97706] px-5 py-2.5 text-sm font-bold text-[#D97706] hover:bg-[#FEF3C7]">Promociones</a>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden border-2 border-[#F3E8C9] shadow-sm bg-white p-2">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop" alt="Pan Artesanal" class="w-full h-60 object-cover rounded-xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categorías Destacadas -->
+    <main class="mx-auto max-w-7xl px-4 py-10 flex-1 w-full">
+        <h2 class="text-2xl font-bold text-[#512B11] mb-6">¿Qué se te antoja hoy?</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <a href="categorias.html" class="bg-white p-5 rounded-xl border border-[#F3E8C9] text-center hover:border-[#D97706] transition">
+                <div class="text-3xl mb-2">🥐</div>
+                <h3 class="font-bold text-stone-800">Pan Dulce</h3>
+            </a>
+            <a href="categorias.html" class="bg-white p-5 rounded-xl border border-[#F3E8C9] text-center hover:border-[#D97706] transition">
+                <div class="text-3xl mb-2">🥖</div>
+                <h3 class="font-bold text-stone-800">Pan Salado</h3>
+            </a>
+            <a href="categorias.html" class="bg-white p-5 rounded-xl border border-[#F3E8C9] text-center hover:border-[#D97706] transition">
+                <div class="text-3xl mb-2">🍰</div>
+                <h3 class="font-bold text-stone-800">Repostería</h3>
+            </a>
+            <a href="categorias.html" class="bg-white p-5 rounded-xl border border-[#F3E8C9] text-center hover:border-[#D97706] transition">
+                <div class="text-3xl mb-2">☕</div>
+                <h3 class="font-bold text-stone-800">Bebidas</h3>
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-[#FFFDF5] border-t border-[#F3E8C9] py-4 text-center text-xs text-stone-500">
+        <p>Panadería Jabi - Desarrollado por Javier Hernández Méndez (Integrante 1)</p>
+    </footer>
+</body>
+</html>
