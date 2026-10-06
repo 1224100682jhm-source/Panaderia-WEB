@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Dulces Delicias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#FAF6E9] text-stone-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-[#FFFDF5] border-b border-[#F3E8C9] sticky top-0 z-50">
+        <div class="mx-auto flex max-w-7xl items-center justify-between p-4">
+            <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-stone-600 hover:text-[#D97706]">Inicio</a>
+                <a href="catalogo.html" class="text-[#D97706] font-bold border-b-2 border-[#D97706] pb-1">Catálogo</a>
+                <a href="categorias.html" class="text-stone-600 hover:text-[#D97706]">Categorías</a>
+                <a href="promociones.html" class="text-stone-600 hover:text-[#D97706]">Promociones 🏷️</a>
+            </nav>
+            <a href="carrito.html" class="flex items-center gap-2 rounded-lg bg-[#D97706] px-4 py-2 text-sm font-semibold text-white">
+                🛒 Mi Carrito <span class="bg-white text-[#D97706] text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 flex-1 w-full">
+        <h1 class="text-3xl font-extrabold text-[#512B11] mb-2">Catálogo Completo de Productos</h1>
+        <p class="text-stone-600 text-sm mb-6">Disponibilidad en tiempo real para tus pedidos.</p>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Producto Disponible -->
+            <article class="bg-white rounded-2xl border border-[#F3E8C9] overflow-hidden shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="relative h-48 bg-stone-100">
+                        <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=600&auto=format&fit=crop" alt="Baguette" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-[#059669] text-white text-[10px] font-bold px-2 py-1 rounded-md">DISPONIBLE</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-lg text-[#512B11]">Baguette Tradicional</h3>
+                            <span class="text-lg font-extrabold text-[#D97706]">$32.00</span>
+                        </div>
+                        <p class="text-xs text-stone-500 mb-4">Corteza crujiente y miga suave con masa madre.</p>
+                    </div>
+                </div>
+
+                <!-- Selección de Cantidades -->
+                <div class="p-5 pt-0 border-t border-stone-100">
+                    <div class="flex items-center justify-between gap-3 mt-3">
+                        <div class="flex items-center border border-stone-200 rounded-lg bg-stone-50">
+                            <button class="px-3 py-1 font-bold text-stone-600">-</button>
+                            <input type="number" value="1" min="1" class="w-10 text-center bg-transparent text-xs font-bold focus:outline-none">
+                            <button class="px-3 py-1 font-bold text-stone-600">+</button>
+                        </div>
+                        <button class="flex-1 bg-[#D97706] text-white text-xs font-bold py-2.5 rounded-lg hover:bg-[#B45309]">Agregar al Carrito</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Producto Agotado -->
+            <article class="bg-white rounded-2xl border border-[#F3E8C9] overflow-hidden shadow-sm opacity-75 flex flex-col justify-between">
+                <div>
+                    <div class="relative h-48 bg-stone-100 grayscale">
+                        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=600&auto=format&fit=crop" alt="Croissant" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-[#DC2626] text-white text-[10px] font-bold px-2 py-1 rounded-md">AGOTADO</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-lg text-stone-500 line-through">Croissant de Mantequilla</h3>
+                            <span class="text-lg font-bold text-stone-400">$28.00</span>
+                        </div>
+                        <p class="text-xs text-stone-400 mb-4">Hojaldrado artesanal preparado con mantequilla pura.</p>
+                    </div>
+                </div>
+                <div class="p-5 pt-0 border-t border-stone-100">
+                    <button disabled class="w-full bg-stone-200 text-stone-500 text-xs font-bold py-2.5 rounded-lg cursor-not-allowed">Sin stock disponible</button>
+                </div>
+            </article>
+
+        </section>
+    </main>
+</body>
+</html>
