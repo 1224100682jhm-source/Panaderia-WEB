@@ -9,46 +9,47 @@
     tailwind.config = {
       theme: { extend: {
         colors: {
-          crema: '#fffdf2', borde: '#f3ecb0', cafe: '#5b2a0b',
+          crema: '#FAF6E9', borde: '#F3E8C9', cafe: '#512B11',
           miel: { DEFAULT: '#d97706', oscuro: '#b45309', claro: '#fef3c7' }
-        },
-        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
       } }
     }
   </script>
 </head>
-<body class="bg-crema text-slate-700 font-sans min-h-screen flex flex-col">
+<body class="bg-crema text-stone-800 font-sans min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-white border-b border-borde">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2 text-xl font-bold text-cafe">
-        <span>🥐</span> Dulces Delicias
-      </a>
-      <a href="#" class="text-sm text-miel-oscuro hover:underline">← Volver al carrito</a>
-    </div>
-  </header>
+  <!-- Header de checkout: simplificado, sin navegación para no distraer del pago -->
+    <header class="bg-[#FFFDF5] border-b border-[#F3E8C9]">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4">
+            <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
+            <div class="flex items-center gap-4 text-sm">
+                <span class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-stone-500">🔒 Pago seguro</span>
+                <a href="carrito.html" class="font-medium text-[#D97706] hover:text-[#B45309] transition">← Volver al carrito</a>
+            </div>
+        </div>
+    </header>
 
   <!-- Stepper -->
-  <nav class="max-w-6xl mx-auto w-full px-4 pt-8">
+  <nav aria-label="Progreso del checkout" class="max-w-7xl mx-auto w-full px-4 pt-8">
     <ol class="flex items-center gap-2 text-xs sm:text-sm font-medium">
-      <li class="flex items-center gap-2 text-miel-oscuro"><span class="w-7 h-7 rounded-full bg-miel text-white grid place-items-center">1</span> Acceso</li>
+      <li aria-current="step" class="flex items-center gap-2 text-miel-oscuro"><span class="w-7 h-7 rounded-full bg-miel text-white grid place-items-center">1</span> Acceso</li>
       <li class="flex-1 h-px bg-borde"></li>
-      <li class="flex items-center gap-2 text-slate-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">2</span> Contacto y entrega</li>
+      <li class="flex items-center gap-2 text-stone-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">2</span> Contacto y entrega</li>
       <li class="flex-1 h-px bg-borde"></li>
-      <li class="flex items-center gap-2 text-slate-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">3</span> Pago</li>
+      <li class="flex items-center gap-2 text-stone-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">3</span> Pago</li>
       <li class="flex-1 h-px bg-borde"></li>
-      <li class="flex items-center gap-2 text-slate-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">4</span> Confirmación</li>
+      <li class="flex items-center gap-2 text-stone-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">4</span> Confirmación</li>
     </ol>
   </nav>
 
-  <main class="max-w-6xl mx-auto w-full px-4 py-8 grid lg:grid-cols-3 gap-6 flex-1">
+  <main class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-3 gap-6 flex-1">
 
     <!-- Columna principal -->
     <section class="lg:col-span-2 space-y-6">
       <div>
         <h1 class="text-2xl font-bold text-cafe">¿Cómo quieres continuar?</h1>
-        <p class="text-sm text-slate-500">Puedes comprar sin crear cuenta o entrar para usar tus datos guardados.</p>
+        <p class="text-sm text-stone-500">Puedes comprar sin crear cuenta o entrar para usar tus datos guardados.</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-6">
@@ -56,31 +57,31 @@
         <!-- Inicio de sesión -->
         <article class="bg-white border border-borde rounded-xl p-6 shadow-sm">
           <h2 class="text-lg font-bold text-cafe">Ya tengo cuenta</h2>
-          <p class="text-sm text-slate-500 mb-4">Inicia sesión para autocompletar tus datos y ver tu historial.</p>
+          <p class="text-sm text-stone-500 mb-4">Inicia sesión para autocompletar tus datos y ver tu historial.</p>
           <form class="space-y-4">
             <div>
-              <label class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1" for="email">Correo electrónico</label>
+              <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1" for="email">Correo electrónico</label>
               <input id="email" type="email" placeholder="tucorreo@ejemplo.com"
-                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+                class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             </div>
             <div>
               <div class="flex justify-between items-center mb-1">
-                <label class="block text-xs font-semibold uppercase tracking-wide text-slate-500" for="pass">Contraseña</label>
+                <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500" for="pass">Contraseña</label>
                 <a href="#" class="text-xs text-miel-oscuro hover:underline">¿La olvidaste?</a>
               </div>
               <input id="pass" type="password" placeholder="••••••••"
-                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+                class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             </div>
             <button type="submit" class="w-full bg-miel hover:bg-miel-oscuro text-white font-semibold rounded-lg py-2.5 text-sm transition">Iniciar sesión y continuar</button>
           </form>
-          <p class="text-xs text-slate-500 mt-4 text-center">¿Eres nuevo? <a href="#" class="text-miel-oscuro font-semibold hover:underline">Crear cuenta</a></p>
+          <p class="text-xs text-stone-500 mt-4 text-center">¿Eres nuevo? <a href="#" class="text-miel-oscuro font-semibold hover:underline">Crear cuenta</a></p>
         </article>
 
         <!-- Invitado -->
         <article class="bg-white border border-borde rounded-xl p-6 shadow-sm flex flex-col">
           <h2 class="text-lg font-bold text-cafe">Comprar como invitado</h2>
-          <p class="text-sm text-slate-500 mb-4">Sin registro. Solo necesitamos tus datos de contacto para avisarte de tu pedido.</p>
-          <ul class="space-y-2 text-sm text-slate-600 mb-6">
+          <p class="text-sm text-stone-500 mb-4">Sin registro. Solo necesitamos tus datos de contacto para avisarte de tu pedido.</p>
+          <ul class="space-y-2 text-sm text-stone-600 mb-6">
             <li class="flex gap-2"><span class="text-emerald-600">✓</span> Rápido, en 3 pasos</li>
             <li class="flex gap-2"><span class="text-emerald-600">✓</span> Recibes tu ticket por correo</li>
             <li class="flex gap-2"><span class="text-emerald-600">✓</span> Consulta tu pedido con el folio</li>
@@ -102,16 +103,16 @@
           <li class="py-3 flex justify-between gap-3"><span>1× Pastel de Tres Leches</span><span class="font-medium">$220.00</span></li>
         </ul>
         <dl class="mt-4 pt-4 border-t border-borde space-y-2 text-sm">
-          <div class="flex justify-between"><dt class="text-slate-500">Subtotal</dt><dd>$355.00</dd></div>
-          <div class="flex justify-between"><dt class="text-slate-500">Envío</dt><dd class="text-slate-400">Se calcula después</dd></div>
+          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd>$355.00</dd></div>
+          <div class="flex justify-between"><dt class="text-stone-500">Envío</dt><dd class="text-stone-400">Se calcula después</dd></div>
           <div class="flex justify-between text-base font-bold text-cafe pt-2"><dt>Total</dt><dd>$355.00</dd></div>
         </dl>
       </div>
     </aside>
   </main>
 
-  <footer class="border-t border-borde bg-white text-center text-xs text-slate-500 py-4">
-    Dulces Delicias · Checkout seguro · Prototipo de vistas
-  </footer>
+  <footer class="bg-[#FFFDF5] border-t border-[#F3E8C9] py-4 text-center text-xs text-stone-500">
+        <p>Dulces Delicias - Hecho por Eduardo Yair Cruz Hernández (Integrante 2)</p>
+    </footer>
 </body>
 </html>
