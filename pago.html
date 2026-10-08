@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout · Pago | Dulces Delicias</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          crema: '#FAF6E9', borde: '#F3E8C9', cafe: '#512B11',
+          miel: { DEFAULT: '#d97706', oscuro: '#b45309', claro: '#fef3c7' }
+        }
+      } }
+    }
+  </script>
+</head>
+<body class="bg-crema text-stone-800 font-sans min-h-screen flex flex-col">
+
+  <!-- Header de checkout: simplificado, sin navegación para no distraer del pago -->
+    <header class="bg-[#FFFDF5] border-b border-[#F3E8C9]">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4">
+            <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
+            <div class="flex items-center gap-4 text-sm">
+                <span class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-stone-500">🔒 Pago seguro</span>
+                <a href="carrito.html" class="font-medium text-[#D97706] hover:text-[#B45309] transition">← Volver al carrito</a>
+            </div>
+        </div>
+    </header>
+
+  <nav aria-label="Progreso del checkout" class="max-w-7xl mx-auto w-full px-4 pt-8">
+    <ol class="flex items-center gap-2 text-xs sm:text-sm font-medium">
+      <li class="flex items-center gap-2 text-emerald-700"><span class="w-7 h-7 rounded-full bg-emerald-600 text-white grid place-items-center">✓</span> Acceso</li>
+      <li class="flex-1 h-px bg-emerald-300"></li>
+      <li class="flex items-center gap-2 text-emerald-700"><span class="w-7 h-7 rounded-full bg-emerald-600 text-white grid place-items-center">✓</span> Contacto y entrega</li>
+      <li class="flex-1 h-px bg-emerald-300"></li>
+      <li aria-current="step" class="flex items-center gap-2 text-miel-oscuro"><span class="w-7 h-7 rounded-full bg-miel text-white grid place-items-center">3</span> Pago</li>
+      <li class="flex-1 h-px bg-borde"></li>
+      <li class="flex items-center gap-2 text-stone-400"><span class="w-7 h-7 rounded-full border border-borde bg-white grid place-items-center">4</span> Confirmación</li>
+    </ol>
+  </nav>
+
+  <main class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-3 gap-6 flex-1">
+    <form action="04-confirmacion.html" class="lg:col-span-2 space-y-6">
+
+      <!-- Datos de entrega (solo lectura) -->
+      <section class="bg-white border border-borde rounded-xl shadow-sm p-5 flex items-start justify-between gap-4">
+        <div class="text-sm">
+          <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Entrega</p>
+          <p class="font-semibold text-cafe mt-1">🛵 Envío a domicilio</p>
+          <p class="text-stone-600">Av. Hidalgo 123, Centro, 37800 · Javier Méndez · 418 123 4567</p>
+        </div>
+        <a href="02-contacto-entrega.html" class="text-sm text-miel-oscuro hover:underline shrink-0">Editar</a>
+      </section>
+
+      <!-- Métodos de pago -->
+      <section class="bg-white border border-borde rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-bold text-cafe">Método de pago</h2>
+        <p class="text-sm text-stone-500 mb-4">Elige cómo quieres pagar tu pedido.</p>
+
+        <div class="space-y-3">
+          <!-- PayPal -->
+          <label class="cursor-pointer rounded-xl border-2 border-borde p-4 flex items-start gap-3 has-[:checked]:border-miel has-[:checked]:bg-miel-claro/60 transition">
+            <input type="radio" name="pago" value="paypal" checked class="mt-1 accent-amber-600" onchange="togglePago()">
+            <span class="flex-1">
+              <span class="flex items-center justify-between">
+                <span class="font-semibold text-cafe flex items-center gap-2">
+                  <span class="inline-grid place-items-center w-5 h-5 rounded bg-sky-700 text-white text-xs font-bold">P</span> PayPal
+                </span>
+                <span class="text-[10px] font-bold text-stone-400 tracking-wider">SALDO · TARJETAS · BANCO</span>
+              </span>
+              <span class="block text-xs text-stone-500">Paga con tu cuenta de PayPal o con la tarjeta que tengas vinculada.</span>
+            </span>
+          </label>
+
+          <!-- Qué pasa al elegir PayPal -->
+          <div id="pago-paypal" class="rounded-xl border border-borde bg-crema p-5 text-sm text-stone-600 space-y-3">
+            <ol class="space-y-2">
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-miel text-white text-xs font-bold grid place-items-center">1</span> <span>Pulsa <strong class="text-cafe">Pagar con PayPal</strong>.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-miel text-white text-xs font-bold grid place-items-center">2</span> Te llevamos a PayPal para que inicies sesión y apruebes el pago.</li>
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-miel text-white text-xs font-bold grid place-items-center">3</span> Regresas aquí y ves la confirmación de tu pedido.</li>
+            </ol>
+            <p class="text-xs text-stone-500 pt-1">🔒 No guardamos tus datos de tarjeta ni tu contraseña de PayPal.</p>
+          </div>
+
+          <!-- Transferencia -->
+          <label class="cursor-pointer rounded-xl border-2 border-borde p-4 flex items-start gap-3 has-[:checked]:border-miel has-[:checked]:bg-miel-claro/60 transition">
+            <input type="radio" name="pago" value="transferencia" class="mt-1 accent-amber-600" onchange="togglePago()">
+            <span>
+              <span class="block font-semibold text-cafe">🏦 Transferencia SPEI</span>
+              <span class="block text-xs text-stone-500">Te mostramos la CLABE al confirmar. Tu pedido se prepara al recibir el pago.</span>
+            </span>
+          </label>
+
+          <!-- Efectivo -->
+          <label class="cursor-pointer rounded-xl border-2 border-borde p-4 flex items-start gap-3 has-[:checked]:border-miel has-[:checked]:bg-miel-claro/60 transition">
+            <input type="radio" name="pago" value="efectivo" class="mt-1 accent-amber-600" onchange="togglePago()">
+            <span>
+              <span class="block font-semibold text-cafe">💵 Efectivo al recibir / al recoger</span>
+              <span class="block text-xs text-stone-500">Paga cuando llegue tu pedido o al pasar a sucursal.</span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <label class="flex items-start gap-2 text-xs text-stone-500">
+        <input type="checkbox" required class="mt-0.5 accent-amber-600">
+        <span>Acepto los <a href="#" class="text-miel-oscuro hover:underline">términos y condiciones</a> y el <a href="#" class="text-miel-oscuro hover:underline">aviso de privacidad</a>.</span>
+      </label>
+
+      <div class="flex flex-col-reverse sm:flex-row sm:justify-between gap-3">
+        <a href="02-contacto-entrega.html" class="text-center text-sm text-stone-500 hover:text-cafe py-2.5">← Volver</a>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <!-- Enlace de prueba para ver el flujo de rechazo -->
+          <a href="05-pago-rechazado.html" class="text-center text-xs text-stone-400 hover:text-red-600 py-3 underline">(demo) simular rechazo</a>
+          <button id="btn-pagar" type="submit" class="bg-miel hover:bg-miel-oscuro text-white font-semibold rounded-lg px-8 py-2.5 text-sm transition">Pagar con PayPal · $390.00</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Resumen -->
+    <aside>
+      <div class="bg-white border border-borde rounded-xl shadow-sm p-6 sticky top-6">
+        <h2 class="text-lg font-bold text-cafe mb-4">Resumen de tu pedido</h2>
+        <ul class="divide-y divide-borde text-sm">
+          <li class="py-3 flex justify-between gap-3"><span>5× Concha de Vainilla</span><span class="font-medium">$75.00</span></li>
+          <li class="py-3 flex justify-between gap-3"><span>2× Baguette Tradicional</span><span class="font-medium">$60.00</span></li>
+          <li class="py-3 flex justify-between gap-3"><span>1× Pastel de Tres Leches</span><span class="font-medium">$220.00</span></li>
+        </ul>
+        <dl class="mt-4 pt-4 border-t border-borde space-y-2 text-sm">
+          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd>$355.00</dd></div>
+          <div class="flex justify-between"><dt class="text-stone-500">Envío</dt><dd>$35.00</dd></div>
+          <div class="flex justify-between text-base font-bold text-cafe pt-2"><dt>Total</dt><dd>$390.00</dd></div>
+        </dl>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="bg-[#FFFDF5] border-t border-[#F3E8C9] py-4 text-center text-xs text-stone-500">
+        <p>Dulces Delicias - Hecho por Eduardo Yair Cruz Hernández (Integrante 2)</p>
+    </footer>
+
+  <script>
+    function togglePago() {
+      const v = document.querySelector('input[name="pago"]:checked').value;
+      document.getElementById('pago-paypal').classList.toggle('hidden', v !== 'paypal');
+      const textos = {
+        paypal: 'Pagar con PayPal · $390.00',
+        transferencia: 'Generar CLABE · $390.00',
+        efectivo: 'Confirmar pedido · $390.00'
+      };
+      document.getElementById('btn-pagar').textContent = textos[v];
+    }
+  </script>
+</body>
+</html>
