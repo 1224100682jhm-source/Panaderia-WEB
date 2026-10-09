@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout · Pago rechazado | Dulces Delicias</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          crema: '#FAF6E9', borde: '#F3E8C9', cafe: '#512B11',
+          miel: { DEFAULT: '#d97706', oscuro: '#b45309', claro: '#fef3c7' }
+        }
+      } }
+    }
+  </script>
+</head>
+<body class="bg-crema text-stone-800 font-sans min-h-screen flex flex-col">
+
+  <!-- Header de checkout: simplificado, sin navegación para no distraer del pago -->
+    <header class="bg-[#FFFDF5] border-b border-[#F3E8C9]">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4">
+            <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
+            <div class="flex items-center gap-4 text-sm">
+                <span class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-stone-500">🔒 Pago seguro</span>
+                <a href="carrito.html" class="font-medium text-[#D97706] hover:text-[#B45309] transition">← Volver al carrito</a>
+            </div>
+        </div>
+    </header>
+
+  <main class="max-w-2xl mx-auto w-full px-4 py-10 space-y-6 flex-1">
+
+    <section class="bg-white border border-red-200 rounded-xl shadow-sm p-8 text-center">
+      <div class="w-16 h-16 mx-auto rounded-full bg-red-100 text-red-600 grid place-items-center text-3xl">✕</div>
+      <h1 class="text-2xl font-bold text-cafe mt-4">No pudimos procesar tu pago</h1>
+      <p class="text-sm text-stone-500 mt-1">No se realizó ningún cargo. Tu pedido sigue guardado, no perdiste nada.</p>
+
+      <div class="mt-5 rounded-lg bg-red-50 border border-red-200 p-4 text-left text-sm">
+        <p class="font-semibold text-red-700">Motivo: PayPal no pudo completar el pago</p>
+        <p class="text-red-600 text-xs mt-1">Código de referencia: <span class="font-mono">INSTRUMENT_DECLINED</span> · Intento 1 de 3</p>
+      </div>
+    </section>
+
+    <section class="bg-white border border-borde rounded-xl shadow-sm p-6">
+      <h2 class="text-lg font-bold text-cafe mb-3">Qué puedes hacer</h2>
+      <ul class="space-y-2 text-sm text-stone-600 mb-5">
+        <li class="flex gap-2"><span>•</span> En PayPal, elige otra fuente de pago (otra tarjeta o cuenta bancaria).</li>
+        <li class="flex gap-2"><span>•</span> Verifica que tu cuenta tenga saldo o un método vinculado válido.</li>
+        <li class="flex gap-2"><span>•</span> Si cancelaste en la ventana de PayPal, puedes volver a intentarlo cuando quieras.</li>
+      </ul>
+
+      <div class="rounded-lg bg-miel-claro/70 border border-borde p-3 text-xs text-miel-oscuro flex items-center justify-between gap-3">
+        <span>⏱ Reservamos tus productos por <strong>15 minutos</strong> mientras reintentas.</span>
+        <span class="font-mono font-bold text-sm">14:32</span>
+      </div>
+
+      <div class="mt-5 flex flex-col sm:flex-row gap-3">
+        <a href="03-pago.html" class="flex-1 text-center bg-miel hover:bg-miel-oscuro text-white font-semibold rounded-lg py-2.5 text-sm transition">Reintentar con PayPal</a>
+        <a href="03-pago.html" class="flex-1 text-center bg-white border-2 border-miel text-miel-oscuro hover:bg-miel-claro font-semibold rounded-lg py-2.5 text-sm transition">Cambiar método de pago</a>
+      </div>
+      <div class="mt-3 text-center">
+        <a href="carrito.html" class="text-xs text-stone-500 hover:text-cafe underline">Volver al carrito</a>
+      </div>
+    </section>
+
+    <!-- Resumen compacto -->
+    <section class="bg-white border border-borde rounded-xl shadow-sm p-5 text-sm">
+      <div class="flex justify-between"><span class="text-stone-500">Pedido en espera</span><span class="font-semibold text-cafe">8 productos</span></div>
+      <div class="flex justify-between mt-1"><span class="text-stone-500">Total a pagar</span><span class="font-bold text-cafe">$390.00</span></div>
+    </section>
+  </main>
+
+  <footer class="bg-[#FFFDF5] border-t border-[#F3E8C9] py-4 text-center text-xs text-stone-500">
+        <p>Dulces Delicias - Hecho por Eduardo Yair Cruz Hernández (Integrante 2)</p>
+    </footer>
+</body>
+</html>
