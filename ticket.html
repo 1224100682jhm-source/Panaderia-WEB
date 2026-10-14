@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket #ORD-1049 | Dulces Delicias</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          crema: '#FAF6E9', borde: '#F3E8C9', cafe: '#512B11',
+          miel: { DEFAULT: '#d97706', oscuro: '#b45309', claro: '#fef3c7' }
+        }
+      } }
+    }
+  </script>
+  <style>
+    @media print {
+      body { background: #fff !important; }
+      .no-print { display: none !important; }
+      .ticket { box-shadow: none !important; border: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-crema text-stone-800 font-sans min-h-screen flex flex-col">
+
+    <div class="no-print">
+    <!-- Header de checkout: simplificado, sin navegación para no distraer del pago -->
+    <header class="bg-[#FFFDF5] border-b border-[#F3E8C9]">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4">
+            <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
+            <div class="flex items-center gap-4 text-sm">
+                <a href="catalogo.html" class="font-medium text-[#D97706] hover:text-[#B45309] transition">Seguir comprando</a>
+            </div>
+        </div>
+    </header>
+    </div>
+
+    <div class="py-8 px-4 flex-1 w-full">
+
+  <div class="no-print max-w-sm mx-auto mb-4 flex justify-between text-sm">
+    <a href="04-confirmacion.html" class="text-miel-oscuro hover:underline">← Volver</a>
+    <button onclick="window.print()" class="bg-miel hover:bg-miel-oscuro text-white font-semibold rounded-lg px-4 py-1.5 transition">🖨 Imprimir</button>
+  </div>
+
+  <article class="ticket max-w-sm mx-auto bg-white border border-borde rounded-xl shadow-sm p-6 font-mono text-[13px] leading-relaxed">
+
+    <header class="text-center">
+      <p class="text-2xl">🥐</p>
+      <h1 class="text-lg font-bold text-cafe font-sans">Dulces Delicias</h1>
+      <p class="text-xs text-stone-500">Av. Hidalgo 123, Centro<br>Dolores Hidalgo, Gto. · Tel. 418 123 4567</p>
+    </header>
+
+    <div class="border-t border-dashed border-stone-300 my-4"></div>
+
+    <div class="text-center">
+      <p class="text-[11px] uppercase tracking-widest text-stone-500">Folio del pedido</p>
+      <p class="text-2xl font-extrabold text-cafe">#ORD-1049</p>
+    </div>
+
+    <dl class="mt-4 space-y-1 text-xs">
+      <div class="flex justify-between"><dt class="text-stone-500">Fecha</dt><dd>02/10/2026 · 19:58</dd></div>
+      <div class="flex justify-between"><dt class="text-stone-500">Cliente</dt><dd>Javier Méndez</dd></div>
+      <div class="flex justify-between"><dt class="text-stone-500">Tipo</dt><dd>Envío a domicilio</dd></div>
+      <div class="flex justify-between gap-4"><dt class="text-stone-500 shrink-0">Dirección</dt><dd class="text-right">Av. Hidalgo 123, Centro</dd></div>
+      <div class="flex justify-between"><dt class="text-stone-500">Pago</dt><dd>PayPal</dd></div>
+      <div class="flex justify-between"><dt class="text-stone-500">Ref. de pago</dt><dd>PP-8XK4291</dd></div>
+    </dl>
+
+    <div class="border-t border-dashed border-stone-300 my-4"></div>
+
+    <table class="w-full text-xs">
+      <thead>
+        <tr class="text-stone-500 text-left"><th class="font-normal pb-1">Cant.</th><th class="font-normal pb-1">Producto</th><th class="font-normal pb-1 text-right">Importe</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="py-0.5">5</td><td>Concha de Vainilla</td><td class="text-right">$75.00</td></tr>
+        <tr><td class="py-0.5">2</td><td>Baguette Tradicional</td><td class="text-right">$60.00</td></tr>
+        <tr><td class="py-0.5">1</td><td>Pastel de Tres Leches</td><td class="text-right">$220.00</td></tr>
+      </tbody>
+    </table>
+
+    <div class="border-t border-dashed border-stone-300 my-4"></div>
+
+    <dl class="space-y-1 text-xs">
+      <div class="flex justify-between"><dt>Subtotal</dt><dd>$355.00</dd></div>
+      <div class="flex justify-between"><dt>Envío</dt><dd>$35.00</dd></div>
+      <div class="flex justify-between text-base font-bold text-cafe pt-1"><dt>TOTAL</dt><dd>$390.00</dd></div>
+      <div class="flex justify-between text-emerald-700 font-semibold"><dt>Estado de pago</dt><dd>PAGADO</dd></div>
+    </dl>
+
+    <div class="border-t border-dashed border-stone-300 my-4"></div>
+
+    <!-- Placeholder de QR -->
+    <div class="text-center">
+      <div class="w-24 h-24 mx-auto border-2 border-cafe grid place-items-center text-[10px] text-stone-400 font-sans">QR del folio</div>
+      <p class="text-[11px] text-stone-500 mt-2 font-sans">Presenta este folio para consultar o recoger tu pedido.</p>
+      <p class="text-sm font-semibold text-cafe mt-3 font-sans">¡Gracias por tu compra! 🧡</p>
+    </div>
+  </article>
+    </div>
+    <footer class="no-print bg-[#FFFDF5] border-t border-[#F3E8C9] py-4 text-center text-xs text-stone-500">
+        <p>Dulces Delicias - Hecho por Eduardo Yair Cruz Hernández (Integrante 2)</p>
+    </footer>
+</body>
+</html>
