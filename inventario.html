@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventario de Materias Primas | Dulces Delicias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-yellow-50 text-stone-800">
+    <!-- Barra de navegacion -->
+    <header class="border-b border-yellow-200 bg-white">
+      <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 p-4">
+        <span class="text-lg font-semibold text-amber-900">🥐 Dulces Delicias</span>
+        <ul class="flex flex-wrap gap-5 text-sm">
+          <li><a href="dashboard.html" class="hover:text-amber-600">Dashboard</a></li>
+          <li><a href="catalogo.html" class="hover:text-amber-600">Catálogo</a></li>
+          <li><a href="precios.html" class="hover:text-amber-600">Precios y Promos</a></li>
+          <li><a href="inventario.html" class="border-b-2 border-amber-600 font-semibold text-amber-600">Inventario</a></li>
+          <li><a href="personal.html" class="hover:text-amber-600">Personal</a></li>
+          <li><a href="reportes.html" class="hover:text-amber-600">Reportes</a></li>
+          <li><a href="auditoria.html" class="hover:text-amber-600">Auditoría</a></li>
+          <li><a href="caja.html" class="hover:text-amber-600">Cierres de Caja</a></li>
+        </ul>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-stone-500">Rol: <b>Administrador</b></span
+          ><button class="rounded-lg bg-stone-800 px-4 py-2 text-sm text-white hover:bg-stone-700">Cerrar sesión</button>
+        </div>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-6xl space-y-8 p-4 py-8">
+      <h1 class="text-3xl font-semibold text-amber-900">Inventario de Materias Primas</h1>
+      <section class="grid gap-4 sm:grid-cols-3">
+        <article class="rounded-xl border border-yellow-200 bg-white p-5">
+          <p class="text-sm text-stone-500">Insumos registrados</p>
+          <p class="mt-1 text-3xl font-semibold text-indigo-600">32</p>
+          <p class="mt-1 text-xs text-stone-400"></p>
+        </article>
+        <article class="rounded-xl border border-yellow-200 bg-white p-5">
+          <p class="text-sm text-stone-500">Bajo mínimo</p>
+          <p class="mt-1 text-3xl font-semibold text-red-600">5</p>
+          <p class="mt-1 text-xs text-stone-400"></p>
+        </article>
+        <article class="rounded-xl border border-yellow-200 bg-white p-5">
+          <p class="text-sm text-stone-500">Merma del mes</p>
+          <p class="mt-1 text-3xl font-semibold text-amber-600">3.2%</p>
+          <p class="mt-1 text-xs text-stone-400"></p>
+        </article>
+      </section>
+      <!-- Filtros y acciones -->
+      <section class="rounded-xl border border-yellow-200 bg-white p-5 flex flex-wrap items-end gap-4">
+        <div class="min-w-[160px] flex-1">
+          <label class="block text-sm text-stone-600">Buscar</label
+          ><input type="text" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+        </div>
+        <div class="min-w-[160px] flex-1">
+          <label class="block text-sm text-stone-600">Estado</label
+          ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+            <option>Todos</option>
+            <option>Bajo mínimo</option>
+            <option>Óptimo</option>
+          </select>
+        </div>
+        <a href="#mov" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+          >+ Registrar entrada</a
+        >
+        <a
+          href="#mov"
+          class="inline-block rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+          >Registrar merma</a
+        >
+      </section>
+      <!-- Tabla de insumos -->
+      <section class="overflow-x-auto rounded-xl border border-yellow-200 bg-white">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-yellow-200 text-stone-500">
+            <tr>
+              <th class="p-4 font-medium">Insumo</th>
+              <th class="p-4 font-medium">Stock</th>
+              <th class="p-4 font-medium">Mínimo</th>
+              <th class="p-4 font-medium">Nivel</th>
+              <th class="p-4 font-medium">Estado</th>
+              <th class="p-4 font-medium">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-yellow-100">
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Harina de trigo</td>
+              <td class="p-4">8 kg</td>
+              <td class="p-4">25 kg</td>
+              <td class="p-4">
+                <div class="h-2.5 min-w-[90px] rounded-full bg-yellow-100"><div class="h-full rounded-full bg-red-600 w-[20%]"></div></div>
+              </td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-red-100 text-red-800">Crítico</span></td>
+              <td class="p-4">
+                <a
+                  href="#mov"
+                  class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+                  >Entrada</a
+                >
+                <button
+                  class="rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+                >
+                  Ajustar
+                </button>
+              </td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Mantequilla</td>
+              <td class="p-4">3 kg</td>
+              <td class="p-4">10 kg</td>
+              <td class="p-4">
+                <div class="h-2.5 min-w-[90px] rounded-full bg-yellow-100"><div class="h-full rounded-full bg-red-600 w-[30%]"></div></div>
+              </td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-red-100 text-red-800">Crítico</span></td>
+              <td class="p-4">
+                <a
+                  href="#mov"
+                  class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+                  >Entrada</a
+                >
+                <button
+                  class="rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+                >
+                  Ajustar
+                </button>
+              </td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Levadura</td>
+              <td class="p-4">1.2 kg</td>
+              <td class="p-4">1 kg</td>
+              <td class="p-4">
+                <div class="h-2.5 min-w-[90px] rounded-full bg-yellow-100">
+                  <div class="h-full rounded-full bg-amber-600 w-[55%]"></div>
+                </div>
+              </td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-yellow-100 text-yellow-800">Por agotarse</span></td>
+              <td class="p-4">
+                <a
+                  href="#mov"
+                  class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+                  >Entrada</a
+                >
+                <button
+                  class="rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+                >
+                  Ajustar
+                </button>
+              </td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Azúcar</td>
+              <td class="p-4">40 kg</td>
+              <td class="p-4">15 kg</td>
+              <td class="p-4">
+                <div class="h-2.5 min-w-[90px] rounded-full bg-yellow-100">
+                  <div class="h-full rounded-full bg-emerald-600 w-[90%]"></div>
+                </div>
+              </td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-emerald-100 text-emerald-800">Óptimo</span></td>
+              <td class="p-4">
+                <a
+                  href="#mov"
+                  class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+                  >Entrada</a
+                >
+                <button
+                  class="rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+                >
+                  Ajustar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- Alertas -->
+      <section class="rounded-xl border border-yellow-200 bg-white p-5">
+        <h2 class="mb-4 text-xl font-semibold text-amber-900">Alertas de stock</h2>
+        <div class="flex flex-wrap items-end gap-4">
+          <div class="min-w-[160px] flex-1">
+            <label class="block text-sm text-stone-600">Notificar a</label
+            ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+              <option>Administrador</option>
+              <option>Cocina</option>
+            </select>
+          </div>
+          <div class="min-w-[160px] flex-1">
+            <label class="block text-sm text-stone-600">Canal</label
+            ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+              <option>Panel</option>
+              <option>Correo</option>
+            </select>
+          </div>
+          <label class="text-sm"><input type="checkbox" checked class="accent-amber-600" /> Alertar al llegar al mínimo</label>
+          <button class="rounded-lg px-3 py-2 text-sm font-semibold bg-amber-600 text-white hover:bg-amber-700">Guardar</button>
+        </div>
+      </section>
+      <div id="mov" class="fixed inset-0 z-10 hidden place-items-center bg-black/40 p-4 target:grid">
+        <div class="max-h-full w-full max-w-lg overflow-y-auto rounded-xl bg-white p-6">
+          <h2 class="mb-4 text-xl font-semibold text-amber-900">Movimiento de inventario</h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Insumo</label
+              ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+                <option>Harina de trigo</option>
+                <option>Mantequilla</option>
+                <option>Levadura</option>
+                <option>Azúcar</option>
+              </select>
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Tipo</label
+              ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+                <option>Entrada</option>
+                <option>Merma</option>
+              </select>
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Cantidad</label
+              ><input type="number" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Proveedor / motivo</label
+              ><input type="text" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-2">
+            <a
+              href="#"
+              class="inline-block rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+              >Cancelar</a
+            >
+            <a href="#" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+              >Registrar</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="border-t border-yellow-200 p-5 text-center text-xs text-stone-500">
+      Panel Administrativo · Módulo Gerencial · Dulces Delicias | Prototipo Beta
+    </footer>
+  </body>
+</html>
