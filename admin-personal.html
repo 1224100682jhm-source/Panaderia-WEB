@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Personal, Roles y Permisos | Dulces Delicias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-yellow-50 text-stone-800">
+    <!-- Barra de navegacion -->
+    <header class="border-b border-yellow-200 bg-white">
+      <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 p-4">
+        <span class="text-lg font-semibold text-amber-900">🥐 Dulces Delicias</span>
+        <ul class="flex flex-wrap gap-5 text-sm">
+          <li><a href="dashboard.html" class="hover:text-amber-600">Dashboard</a></li>
+          <li><a href="catalogo.html" class="hover:text-amber-600">Catálogo</a></li>
+          <li><a href="precios.html" class="hover:text-amber-600">Precios y Promos</a></li>
+          <li><a href="inventario.html" class="hover:text-amber-600">Inventario</a></li>
+          <li><a href="personal.html" class="border-b-2 border-amber-600 font-semibold text-amber-600">Personal</a></li>
+          <li><a href="reportes.html" class="hover:text-amber-600">Reportes</a></li>
+          <li><a href="auditoria.html" class="hover:text-amber-600">Auditoría</a></li>
+          <li><a href="caja.html" class="hover:text-amber-600">Cierres de Caja</a></li>
+        </ul>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-stone-500">Rol: <b>Administrador</b></span
+          ><button class="rounded-lg bg-stone-800 px-4 py-2 text-sm text-white hover:bg-stone-700">Cerrar sesión</button>
+        </div>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-6xl space-y-8 p-4 py-8">
+      <h1 class="text-3xl font-semibold text-amber-900">Gestión de Personal, Roles y Permisos</h1>
+      <!-- Empleados -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-amber-900">Empleados</h2>
+        <a href="#emp" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-amber-600 text-white hover:bg-amber-700"
+          >+ Nuevo empleado</a
+        >
+      </div>
+      <section class="overflow-x-auto rounded-xl border border-yellow-200 bg-white">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-yellow-200 text-stone-500">
+            <tr>
+              <th class="p-4 font-medium">Nombre</th>
+              <th class="p-4 font-medium">Rol</th>
+              <th class="p-4 font-medium">Turno</th>
+              <th class="p-4 font-medium">Estado</th>
+              <th class="p-4 font-medium">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-yellow-100">
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Ana Ramírez</td>
+              <td class="p-4">Repartidor</td>
+              <td class="p-4">Matutino</td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-emerald-100 text-emerald-800">Activo</span></td>
+              <td class="p-4">
+                <a href="#emp" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-indigo-700 text-white hover:bg-indigo-800"
+                  >Editar</a
+                >
+                <button class="rounded-lg px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700">Desactivar</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Pedro Martínez</td>
+              <td class="p-4">Repartidor</td>
+              <td class="p-4">Vespertino</td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-emerald-100 text-emerald-800">Activo</span></td>
+              <td class="p-4">
+                <a href="#emp" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-indigo-700 text-white hover:bg-indigo-800"
+                  >Editar</a
+                >
+                <button class="rounded-lg px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700">Desactivar</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Luis Torres</td>
+              <td class="p-4">Cocina / Despacho</td>
+              <td class="p-4">Madrugada</td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-emerald-100 text-emerald-800">Activo</span></td>
+              <td class="p-4">
+                <a href="#emp" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-indigo-700 text-white hover:bg-indigo-800"
+                  >Editar</a
+                >
+                <button class="rounded-lg px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700">Desactivar</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Marta Sosa</td>
+              <td class="p-4">Cajero</td>
+              <td class="p-4">Matutino</td>
+              <td class="p-4"><span class="rounded-full px-3 py-1 text-xs bg-red-100 text-red-800">Inactivo</span></td>
+              <td class="p-4">
+                <a href="#emp" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-indigo-700 text-white hover:bg-indigo-800"
+                  >Editar</a
+                >
+                <button class="rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700">Activar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- Roles y permisos -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-amber-900">Roles y permisos</h2>
+        <button class="rounded-lg px-3 py-2 text-sm font-semibold bg-amber-600 text-white hover:bg-amber-700">Guardar cambios</button>
+      </div>
+      <section class="overflow-x-auto rounded-xl border border-yellow-200 bg-white">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-yellow-200 text-stone-500">
+            <tr>
+              <th class="p-4 font-medium">Módulo</th>
+              <th class="p-4 font-medium">Administrador</th>
+              <th class="p-4 font-medium">Cocina / Despacho</th>
+              <th class="p-4 font-medium">Cajero</th>
+              <th class="p-4 font-medium">Repartidor</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-yellow-100">
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Dashboard</td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Catálogo</td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Inventario</td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Pedidos</td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Caja</td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+            </tr>
+            <tr class="hover:bg-yellow-50">
+              <td class="p-4">Reportes y auditoría</td>
+              <td class="p-4"><input type="checkbox" checked class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+              <td class="p-4"><input type="checkbox" class="h-4 w-4 accent-amber-600" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <div id="emp" class="fixed inset-0 z-10 hidden place-items-center bg-black/40 p-4 target:grid">
+        <div class="max-h-full w-full max-w-lg overflow-y-auto rounded-xl bg-white p-6">
+          <h2 class="mb-4 text-xl font-semibold text-amber-900">Empleado</h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Nombre completo</label
+              ><input type="text" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Teléfono</label
+              ><input type="text" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Correo</label
+              ><input type="email" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Rol</label
+              ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+                <option>Cajero</option>
+                <option>Cocina / Despacho</option>
+                <option>Repartidor</option>
+                <option>Administrador</option>
+              </select>
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Turno</label
+              ><select class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none">
+                <option>Matutino</option>
+                <option>Vespertino</option>
+                <option>Madrugada</option>
+              </select>
+            </div>
+            <div class="min-w-[160px] flex-1">
+              <label class="block text-sm text-stone-600">Contraseña temporal</label
+              ><input type="password" class="mt-1 w-full rounded border border-stone-300 p-2 focus:border-amber-500 focus:outline-none" />
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-2">
+            <a
+              href="#"
+              class="inline-block rounded-lg px-3 py-2 text-sm font-semibold border border-yellow-300 bg-white text-amber-900 hover:bg-yellow-50"
+              >Cancelar</a
+            >
+            <a href="#" class="inline-block rounded-lg px-3 py-2 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
+              >Guardar</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="border-t border-yellow-200 p-5 text-center text-xs text-stone-500">
+      Panel Administrativo · Módulo Gerencial · Dulces Delicias | Prototipo Beta
+    </footer>
+  </body>
+</html>
