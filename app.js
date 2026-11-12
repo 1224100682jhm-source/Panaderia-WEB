@@ -370,7 +370,7 @@
   }
   function initializeAdminAuth() {
     const page = location.pathname.split("/").pop();
-    const isAdminPage = /^admin-/.test(page) || page === "auditoria.html";
+    const isAdminPage = (/^admin-/.test(page) && page !== "admin-login.html") || page === "auditoria.html";
     if (isAdminPage && localStorage.getItem(ADMIN_SESSION_KEY) !== "active") {
       location.replace("admin-login.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
       return false;
@@ -391,7 +391,7 @@
           }
           localStorage.setItem(ADMIN_SESSION_KEY, "active");
           const requestedPage = new URLSearchParams(location.search).get("returnTo");
-          const safePage = requestedPage && /^(admin-[\w-]+\.html|auditoria\.html)(?:[?#].*)?$/.test(requestedPage)
+          const safePage = requestedPage && /^(admin-(?!login\.html)[\w-]+\.html|auditoria\.html)(?:[?#].*)?$/.test(requestedPage)
             ? requestedPage
             : "admin-dashboard.html";
           location.replace(safePage);
