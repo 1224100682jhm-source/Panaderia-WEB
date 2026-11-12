@@ -269,8 +269,9 @@
     inputs[2].value = product ? product.price : "";
     inputs[3].value = product ? product.cost : "";
     if (textarea) textarea.value = product ? product.description : "";
-    if (inputs[5]) inputs[5].checked = product ? product.visible : true;
-    if (inputs[6]) inputs[6].checked = product ? product.season : false;
+    inputs[4].value = product ? product.stock : 10;
+    if (inputs[6]) inputs[6].checked = product ? product.visible : true;
+    if (inputs[7]) inputs[7].checked = product ? product.season : false;
     location.hash = "nuevo";
   }
   function bindAdminCatalogForm() {
@@ -285,8 +286,9 @@
       const name = inputs[0].value.trim();
       const id = inputs[1].value.trim();
       const price = Number(inputs[2].value);
-      if (!name || !id || !Number.isFinite(price) || price < 0) {
-        alert("Completa nombre, SKU y un precio válido.");
+      const stock = Number(inputs[4].value);
+      if (!name || !id || !Number.isFinite(price) || price < 0 || !Number.isInteger(stock) || stock < 0) {
+        alert("Completa nombre, SKU, precio y existencias válidas.");
         return;
       }
       const list = products();
@@ -299,7 +301,7 @@
       const next = {
         id: id, name: name, category: modal.querySelector("select").value, price: price,
         cost: Number(inputs[3].value) || 0, description: modal.querySelector("textarea").value.trim(),
-        image: old ? old.image : "", stock: old ? old.stock : 10, visible: inputs[5].checked, season: inputs[6].checked
+        image: old ? old.image : "", stock: stock, visible: inputs[6].checked, season: inputs[7].checked
       };
       write(KEYS.products, editing ? list.map(function (item) { return item.id === editing ? next : item; }) : list.concat(next));
       location.hash = "";
@@ -344,9 +346,9 @@
     const image = document.querySelector("main img");
     if (image) { image.src = item.image; image.alt = item.name; }
     const button = document.querySelector("main button");
-    if (button) button.addEventListener("click", function () {
-      addToCart(item.id, document.querySelector('main input[type="number"]')?.value);
-    });
+    if (button) button.onclick = function () {
+      addToCart(item.id, document.querySelector('main input[type="number"]').value);
+    };
   }
   function fixAdminLinks() {
     const paths = { "dashboard.html": "admin-dashboard.html", "catalogo.html": "admin-catalogo.html", "precios.html": "admin-precios.html",
