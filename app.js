@@ -8,6 +8,9 @@
     orders: "dulces-delicias-orders",
     currentOrder: "dulces-delicias-current-order"
   };
+  const ADMIN_SESSION_KEY = "dulces-delicias-admin-session";
+  const ADMIN_EMAIL = "admin@dulcesdelicias.com";
+  const ADMIN_PASSWORD = "Admin123!";
   const seedProducts = [
     { id: "PD-001", name: "Concha de vainilla", category: "Pan dulce", price: 15, cost: 6.5, description: "Concha tradicional, suave y recién horneada.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop", stock: 30, visible: true, season: false },
     { id: "PS-004", name: "Baguette tradicional", category: "Pan salado", price: 25, cost: 11, description: "Corteza crujiente y miga suave con masa madre.", image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=600&auto=format&fit=crop", stock: 20, visible: true, season: false },
@@ -363,6 +366,44 @@
       if ((isAdminPage || file === "historial_reportes.html" || file === "03-pago.html" || file === "checkout.html") && paths[file]) {
         link.href = paths[file] + hash;
       }
+      function initializeAdminAuth() {
+        const page = location.pathname.split("/").pop();
+        const isAdminPage = /^admin-/.test(page) || page === "auditoria.html";
+        if (isAdminPage && localStorage.getItem(ADMIN_SESSION_KEY) !== "active") {
+          location.replace("admin-login.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
+          return false;
+        }
+
+        if (page === "admin-login.html") {
+          const form = document.querySelector("[data-admin-login]");
+          if (!form) return true;
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const email = form.elements.namedItem("email").value.trim().toLowerCase();
+            const password = form.elements.namedItem("password").value;
+            const error = document.querySelector("[data-login-error]");
+            if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+              error.textContent = "Correo o contraseña incorrectos.";
+              error.classList.remove("hidden");
+              return;
+            }
+            localStorage.setItem(ADMIN_SESSION_KEY, "active");
+            const requestedPage = new URLSearchParams(location.search).get("returnTo");
+            const safePage = requestedPage && /^(admin-[\w-]+\.html|auditoria\.html)(?:[?#].*)?$/.test(requestedPage)
+              ? requestedPage
+              : "admin-dashboard.html";
+            location.replace(safePage);
+          });
+        }
+
+        document.querySelectorAll("[data-admin-logout]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            localStorage.removeItem(ADMIN_SESSION_KEY);
+            location.replace("index.html");
+          });
+        });
+        return true;
+      }
     });
   }
   function refresh() {
@@ -377,6 +418,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     try {
+      if (!initializeAdminAuth()) return;
       fixAdminLinks();
       bindAdminCatalogForm();
       bindAdminPrices();
