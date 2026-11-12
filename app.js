@@ -357,54 +357,57 @@
     const paths = { "dashboard.html": "admin-dashboard.html", "catalogo.html": "admin-catalogo.html", "precios.html": "admin-precios.html",
       "inventario.html": "admin-inventario.html", "personal.html": "admin-personal.html", "reportes.html": "admin-reportes.html", "caja.html": "admin-caja.html",
       "historial_reportes.html": "admin-reportes.html", "03-pago.html": "pago.html", "checkout.html": "acceso.html" };
+    const isAdminPage = /^admin-/.test(location.pathname.split("/").pop()) || location.pathname.endsWith("auditoria.html");
     document.querySelectorAll('a[href]').forEach(function (link) {
       const target = link.getAttribute("href");
       if (!target || target.startsWith("#")) return;
       const hash = target.indexOf("#") >= 0 ? target.slice(target.indexOf("#")) : "";
       const file = target.split("#")[0];
-      const isAdminPage = /^admin-/.test(location.pathname.split("/").pop()) || location.pathname.endsWith("auditoria.html");
       if ((isAdminPage || file === "historial_reportes.html" || file === "03-pago.html" || file === "checkout.html") && paths[file]) {
         link.href = paths[file] + hash;
       }
-      function initializeAdminAuth() {
-        const page = location.pathname.split("/").pop();
-        const isAdminPage = /^admin-/.test(page) || page === "auditoria.html";
-        if (isAdminPage && localStorage.getItem(ADMIN_SESSION_KEY) !== "active") {
-          location.replace("admin-login.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
-          return false;
-        }
-
-        if (page === "admin-login.html") {
-          const form = document.querySelector("[data-admin-login]");
-          if (!form) return true;
-          form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const email = form.elements.namedItem("email").value.trim().toLowerCase();
-            const password = form.elements.namedItem("password").value;
-            const error = document.querySelector("[data-login-error]");
-            if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-              error.textContent = "Correo o contraseña incorrectos.";
-              error.classList.remove("hidden");
-              return;
-            }
-            localStorage.setItem(ADMIN_SESSION_KEY, "active");
-            const requestedPage = new URLSearchParams(location.search).get("returnTo");
-            const safePage = requestedPage && /^(admin-[\w-]+\.html|auditoria\.html)(?:[?#].*)?$/.test(requestedPage)
-              ? requestedPage
-              : "admin-dashboard.html";
-            location.replace(safePage);
-          });
-        }
-
-        document.querySelectorAll("[data-admin-logout]").forEach(function (button) {
-          button.addEventListener("click", function () {
-            localStorage.removeItem(ADMIN_SESSION_KEY);
-            location.replace("index.html");
-          });
-        });
-        return true;
-      }
     });
+  }
+  function initializeAdminAuth() {
+    const page = location.pathname.split("/").pop();
+    const isAdminPage = /^admin-/.test(page) || page === "auditoria.html";
+    if (isAdminPage && localStorage.getItem(ADMIN_SESSION_KEY) !== "active") {
+      location.replace("admin-login.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
+      return false;
+    }
+
+    if (page === "admin-login.html") {
+      const form = document.querySelector("[data-admin-login]");
+      if (form) {
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const email = form.elements.namedItem("email").value.trim().toLowerCase();
+          const password = form.elements.namedItem("password").value;
+          const error = document.querySelector("[data-login-error]");
+          if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+            error.textContent = "Correo o contraseña incorrectos.";
+            error.classList.remove("hidden");
+            return;
+          }
+          localStorage.setItem(ADMIN_SESSION_KEY, "active");
+          const requestedPage = new URLSearchParams(location.search).get("returnTo");
+          const safePage = requestedPage && /^(admin-[\w-]+\.html|auditoria\.html)(?:[?#].*)?$/.test(requestedPage)
+            ? requestedPage
+            : "admin-dashboard.html";
+          location.replace(safePage);
+        });
+      }
+
+      return true;
+    }
+
+    document.querySelectorAll("[data-admin-logout]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        localStorage.removeItem(ADMIN_SESSION_KEY);
+        location.replace("index.html");
+      });
+    });
+    return true;
   }
   function refresh() {
     products();
