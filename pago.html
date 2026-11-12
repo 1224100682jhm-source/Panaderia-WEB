@@ -123,13 +123,9 @@
     <aside>
       <div class="bg-white border border-borde rounded-xl shadow-sm p-6 sticky top-6">
         <h2 class="text-lg font-bold text-cafe mb-4">Resumen de tu pedido</h2>
-        <ul class="divide-y divide-borde text-sm">
-          <li class="py-3 flex justify-between gap-3"><span>5× Concha de Vainilla</span><span class="font-medium">$75.00</span></li>
-          <li class="py-3 flex justify-between gap-3"><span>2× Baguette Tradicional</span><span class="font-medium">$60.00</span></li>
-          <li class="py-3 flex justify-between gap-3"><span>1× Pastel de Tres Leches</span><span class="font-medium">$220.00</span></li>
-        </ul>
+        <ul data-order-summary class="divide-y divide-borde text-sm"></ul>
         <dl class="mt-4 pt-4 border-t border-borde space-y-2 text-sm">
-          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd>$355.00</dd></div>
+          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd data-subtotal>$0.00</dd></div>
           <div class="flex justify-between"><dt class="text-stone-500">Envío</dt><dd>$35.00</dd></div>
           <div class="flex justify-between text-base font-bold text-cafe pt-2"><dt>Total</dt><dd>$390.00</dd></div>
         </dl>

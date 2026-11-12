@@ -53,15 +53,15 @@
         <div class="grid sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1" for="nombre">Nombre completo</label>
-            <input id="nombre" type="text" required placeholder="Javier Méndez" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input id="nombre" name="nombre" type="text" required placeholder="Javier Méndez" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1" for="tel">Teléfono / WhatsApp</label>
-            <input id="tel" type="tel" required placeholder="418 123 4567" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input id="tel" name="telefono" type="tel" required placeholder="418 123 4567" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div class="sm:col-span-2">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1" for="mail">Correo electrónico</label>
-            <input id="mail" type="email" required placeholder="tucorreo@ejemplo.com" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input id="mail" name="correo" type="email" required placeholder="tucorreo@ejemplo.com" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             <p class="text-xs text-stone-400 mt-1">Aquí te enviaremos tu ticket y el folio del pedido.</p>
           </div>
         </div>
@@ -95,27 +95,27 @@
         <div class="grid sm:grid-cols-6 gap-4">
           <div class="sm:col-span-4">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Calle</label>
-            <input type="text" placeholder="Av. Hidalgo" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input name="calle" type="text" placeholder="Av. Hidalgo" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div class="sm:col-span-1">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Núm. ext.</label>
-            <input type="text" placeholder="123" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input name="numeroExterior" type="text" placeholder="123" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div class="sm:col-span-1">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Núm. int.</label>
-            <input type="text" placeholder="B" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input name="numeroInterior" type="text" placeholder="B" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div class="sm:col-span-3">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Colonia</label>
-            <input type="text" placeholder="Centro" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input name="colonia" type="text" placeholder="Centro" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div class="sm:col-span-3">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Código postal</label>
-            <input type="text" inputmode="numeric" maxlength="5" placeholder="37800" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <input name="codigoPostal" type="text" inputmode="numeric" maxlength="5" placeholder="37800" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
           </div>
           <div class="sm:col-span-6">
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Referencias</label>
-            <textarea rows="2" placeholder="Entre calles, color de fachada, portón negro…" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel"></textarea>
+            <textarea name="referencias" rows="2" placeholder="Entre calles, color de fachada, portón negro…" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel"></textarea>
           </div>
         </div>
       </section>
@@ -127,14 +127,14 @@
         <div class="grid sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Sucursal</label>
-            <select class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <select name="sucursal" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
               <option>Dulces Delicias · Centro</option>
               <option>Dulces Delicias · Zona Norte</option>
             </select>
           </div>
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Horario estimado</label>
-            <select class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
+            <select name="horario" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
               <option>Hoy · 6:00 – 6:30 pm</option>
               <option>Hoy · 6:30 – 7:00 pm</option>
               <option>Mañana · 8:00 – 8:30 am</option>
@@ -156,13 +156,9 @@
     <aside>
       <div class="bg-white border border-borde rounded-xl shadow-sm p-6 sticky top-6">
         <h2 class="text-lg font-bold text-cafe mb-4">Resumen de tu pedido</h2>
-        <ul class="divide-y divide-borde text-sm">
-          <li class="py-3 flex justify-between gap-3"><span>5× Concha de Vainilla</span><span class="font-medium">$75.00</span></li>
-          <li class="py-3 flex justify-between gap-3"><span>2× Baguette Tradicional</span><span class="font-medium">$60.00</span></li>
-          <li class="py-3 flex justify-between gap-3"><span>1× Pastel de Tres Leches</span><span class="font-medium">$220.00</span></li>
-        </ul>
+        <ul data-order-summary class="divide-y divide-borde text-sm"></ul>
         <dl class="mt-4 pt-4 border-t border-borde space-y-2 text-sm">
-          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd>$355.00</dd></div>
+          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd data-subtotal>$0.00</dd></div>
           <div class="flex justify-between"><dt class="text-stone-500">Envío</dt><dd id="costo-envio">$35.00</dd></div>
           <div class="flex justify-between text-base font-bold text-cafe pt-2"><dt>Total</dt><dd id="total">$390.00</dd></div>
         </dl>

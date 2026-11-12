@@ -5,7 +5,8 @@
     products: "dulces-delicias-products",
     cart: "dulces-delicias-cart",
     customer: "dulces-delicias-customer",
-    orders: "dulces-delicias-orders"
+    orders: "dulces-delicias-orders",
+    currentOrder: "dulces-delicias-current-order"
   };
   const seedProducts = [
     { id: "PD-001", name: "Concha de vainilla", category: "Pan dulce", price: 15, cost: 6.5, description: "Concha tradicional, suave y recién horneada.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop", stock: 30, visible: true, season: false },
@@ -109,7 +110,7 @@
       return '<article class="bg-white p-4 rounded-xl border border-[#F3E8C9] mb-4 flex flex-wrap items-center justify-between gap-3">' +
         '<div><h2 class="font-bold text-stone-800 text-sm">' + escapeText(line.product.name) + '</h2><p class="text-xs text-stone-500">' + money(line.product.price) + " c/u</p></div>" +
         '<div class="flex items-center gap-3"><input data-quantity="' + escapeText(line.product.id) + '" type="number" min="1" max="' + line.product.stock + '" value="' + line.quantity + '" class="w-16 border rounded p-1 text-center">' +
-        '<strong>' + money(line.product.price * line.quantity) + '</strong><button data-remove="' + escapeText(line.product.id) + '" class="text-red-600 text-sm">Quitar</button></div></article>";
+        '<strong>' + money(line.product.price * line.quantity) + '</strong><button data-remove="' + escapeText(line.product.id) + '" class="text-red-600 text-sm">Quitar</button></div></article>';
     }).join("") : '<p class="rounded-xl bg-white p-6 text-stone-500">Tu carrito está vacío. <a class="text-amber-700 underline" href="catalogo.html">Explora el catálogo</a>.</p>';
     const total = document.querySelector("[data-cart-total]");
     if (total) total.textContent = money(cartTotal());
@@ -138,6 +139,98 @@
         '</span><span class="font-medium">' + money(line.product.price * line.quantity) + "</span></li>";
     }).join("") : '<li class="py-3 text-stone-500">Tu carrito está vacío.</li>';
     document.querySelectorAll("[data-subtotal]").forEach(function (el) { el.textContent = money(cartTotal()); });
+    const savedCustomer = read(KEYS.customer, {});
+    const delivery = document.querySelector('input[name="entrega"]:checked');
+    const deliveryType = delivery ? delivery.value : savedCustomer.entrega || "domicilio";
+    const shipping = deliveryType === "recogida" ? 0 : 35;
+    document.querySelectorAll("[data-order-shipping]").forEach(function (el) { el.textContent = money(shipping); });
+    document.querySelectorAll("[data-order-total]").forEach(function (el) { el.textContent = money(cartTotal() + shipping); });
+    document.querySelectorAll("#costo-envio").forEach(function (el) { el.textContent = shipping ? money(shipping) : "Gratis"; });
+    document.querySelectorAll("#total").forEach(function (el) { el.textContent = money(cartTotal() + shipping); });
+  }
+  function bindCheckout() {
+    const form = document.querySelector("main form");
+    if (!form) return;
+    if (location.pathname.endsWith("contacto-entrega.html")) {
+      const saved = read(KEYS.customer, {});
+      Object.keys(saved).forEach(function (name) {
+        const field = form.elements.namedItem(name);
+        if (field && field.type !== "radio") field.value = saved[name];
+      });
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!cartLines().length) {
+          alert("Tu carrito está vacío. Agrega productos antes de continuar.");
+          location.href = "carrito.html";
+          return;
+        }
+        const customer = {};
+        new FormData(form).forEach(function (value, name) { customer[name] = value; });
+        write(KEYS.customer, customer);
+        location.href = "pago.html";
+      });
+    }
+    if (location.pathname.endsWith("pago.html")) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const lines = cartLines();
+        if (!lines.length) {
+          alert("Tu carrito está vacío. Agrega productos antes de pagar.");
+          location.href = "carrito.html";
+          return;
+        }
+        const items = lines.map(function (line) {
+          return { id: line.product.id, name: line.product.name, price: line.product.price, quantity: line.quantity };
+        });
+        const customer = read(KEYS.customer, {});
+        const subtotal = items.reduce(function (sum, line) { return sum + line.price * line.quantity; }, 0);
+        const shipping = customer.entrega === "recogida" ? 0 : 35;
+        const payment = form.querySelector('input[name="pago"]:checked');
+        const order = {
+          id: "ORD-" + Date.now().toString().slice(-8),
+          createdAt: new Date().toISOString(),
+          customer: customer,
+          items: items,
+          subtotal: subtotal,
+          shipping: shipping,
+          total: subtotal + shipping,
+          payment: payment ? payment.value : "efectivo",
+          status: "Pendiente de preparación"
+        };
+        const stock = products().map(function (product) {
+          const ordered = items.find(function (line) { return line.id === product.id; });
+          return ordered ? Object.assign({}, product, { stock: Math.max(0, product.stock - ordered.quantity) }) : product;
+        });
+        write(KEYS.products, stock);
+        write(KEYS.orders, read(KEYS.orders, []).concat(order));
+        write(KEYS.currentOrder, order);
+        write(KEYS.cart, []);
+        location.href = "confirmacion.html";
+      });
+    }
+  }
+  function renderOrderPages() {
+    const order = read(KEYS.currentOrder, null);
+    if (!order) return;
+    document.querySelectorAll("[data-order-number]").forEach(function (el) { el.textContent = "#" + order.id; });
+    document.querySelectorAll("[data-order-email]").forEach(function (el) { el.textContent = order.customer.correo || ""; });
+    document.querySelectorAll("[data-confirmation-title]").forEach(function (el) {
+      el.textContent = "¡Gracias, " + (order.customer.nombre || "cliente") + "! Tu pedido fue recibido";
+    });
+    document.querySelectorAll("[data-order-customer]").forEach(function (el) { el.textContent = order.customer.nombre || ""; });
+    document.querySelectorAll("[data-order-subtotal]").forEach(function (el) { el.textContent = money(order.subtotal); });
+    document.querySelectorAll("[data-order-shipping]").forEach(function (el) { el.textContent = money(order.shipping); });
+    document.querySelectorAll("[data-order-total]").forEach(function (el) { el.textContent = money(order.total); });
+    const summary = document.querySelector("[data-order-summary]");
+    if (summary) summary.innerHTML = order.items.map(function (item) {
+      return '<li class="py-3 flex justify-between gap-3"><span>' + item.quantity + "× " + escapeText(item.name) +
+        '</span><span class="font-medium">' + money(item.price * item.quantity) + "</span></li>";
+    }).join("");
+    const ticketLines = document.querySelector("[data-ticket-lines]");
+    if (ticketLines) ticketLines.innerHTML = order.items.map(function (item) {
+      return "<tr><td class=\"py-0.5\">" + item.quantity + "</td><td>" + escapeText(item.name) +
+        '</td><td class="text-right">' + money(item.price * item.quantity) + "</td></tr>";
+    }).join("");
   }
   function renderAdminCatalog() {
     const tbody = document.querySelector("[data-admin-products]");
@@ -196,33 +289,6 @@
         alert("Completa nombre, SKU y un precio válido.");
         return;
       }
-      function bindAdminPrices() {
-        if (!location.pathname.endsWith("admin-precios.html")) return;
-        document.querySelectorAll("tbody tr").forEach(function (row) {
-          const name = row.cells[0] && row.cells[0].textContent.trim();
-          const input = row.querySelector("input");
-          const button = row.querySelector("button");
-          if (!name || !input || !button) return;
-          const item = products().find(function (product) { return product.name.toLowerCase() === name.toLowerCase(); });
-          if (!item) return;
-          input.value = item.price;
-          button.addEventListener("click", function () {
-            const value = Number(input.value);
-            if (!Number.isFinite(value) || value < 0) {
-              alert("Escribe un precio válido.");
-              return;
-            }
-            const list = products();
-            const current = list.find(function (product) { return product.id === item.id; });
-            current.price = value;
-            write(KEYS.products, list);
-            row.cells[2].textContent = money(value);
-            const margin = row.cells[4].querySelector("span");
-            if (margin) margin.textContent = current.cost > 0 ? Math.round((value - current.cost) / value * 100) + "%" : "—";
-            alert("Precio actualizado en el catálogo.");
-          });
-        });
-      }
       const list = products();
       const editing = modal.dataset.editId;
       if (list.some(function (item) { return item.id === id && item.id !== editing; })) {
@@ -233,11 +299,38 @@
       const next = {
         id: id, name: name, category: modal.querySelector("select").value, price: price,
         cost: Number(inputs[3].value) || 0, description: modal.querySelector("textarea").value.trim(),
-        image: old ? old.image : "", stock: old ? old.stock : 0, visible: inputs[5].checked, season: inputs[6].checked
+        image: old ? old.image : "", stock: old ? old.stock : 10, visible: inputs[5].checked, season: inputs[6].checked
       };
       write(KEYS.products, editing ? list.map(function (item) { return item.id === editing ? next : item; }) : list.concat(next));
       location.hash = "";
       renderAdminCatalog();
+    });
+  }
+  function bindAdminPrices() {
+    if (!location.pathname.endsWith("admin-precios.html")) return;
+    document.querySelectorAll("tbody tr").forEach(function (row) {
+      const name = row.cells[0] && row.cells[0].textContent.trim();
+      const input = row.querySelector("input");
+      const button = row.querySelector("button");
+      if (!name || !input || !button) return;
+      const item = products().find(function (product) { return product.name.toLowerCase() === name.toLowerCase(); });
+      if (!item) return;
+      input.value = item.price;
+      button.addEventListener("click", function () {
+        const value = Number(input.value);
+        if (!Number.isFinite(value) || value < 0) {
+          alert("Escribe un precio válido.");
+          return;
+        }
+        const list = products();
+        const current = list.find(function (product) { return product.id === item.id; });
+        current.price = value;
+        write(KEYS.products, list);
+        row.cells[2].textContent = money(value);
+        const margin = row.cells[4].querySelector("span");
+        if (margin) margin.textContent = current.cost > 0 && value > 0 ? Math.round((value - current.cost) / value * 100) + "%" : "—";
+        alert("Precio actualizado en el catálogo.");
+      });
     });
   }
   function renderProductDetail() {
@@ -256,14 +349,18 @@
     });
   }
   function fixAdminLinks() {
-    if (!/^admin-/.test(location.pathname.split("/").pop())) return;
     const paths = { "dashboard.html": "admin-dashboard.html", "catalogo.html": "admin-catalogo.html", "precios.html": "admin-precios.html",
-      "inventario.html": "admin-inventario.html", "personal.html": "admin-personal.html", "reportes.html": "admin-reportes.html", "caja.html": "admin-caja.html" };
+      "inventario.html": "admin-inventario.html", "personal.html": "admin-personal.html", "reportes.html": "admin-reportes.html", "caja.html": "admin-caja.html",
+      "historial_reportes.html": "admin-reportes.html", "03-pago.html": "pago.html", "checkout.html": "acceso.html" };
     document.querySelectorAll('a[href]').forEach(function (link) {
       const target = link.getAttribute("href");
+      if (!target || target.startsWith("#")) return;
       const hash = target.indexOf("#") >= 0 ? target.slice(target.indexOf("#")) : "";
       const file = target.split("#")[0];
-      if (paths[file]) link.href = paths[file] + hash;
+      const isAdminPage = /^admin-/.test(location.pathname.split("/").pop()) || location.pathname.endsWith("auditoria.html");
+      if ((isAdminPage || file === "historial_reportes.html" || file === "03-pago.html" || file === "checkout.html") && paths[file]) {
+        link.href = paths[file] + hash;
+      }
     });
   }
   function refresh() {
@@ -282,7 +379,9 @@
       bindAdminCatalogForm();
       bindAdminPrices();
       bindCategoryFilters();
+      bindCheckout();
       refresh();
+      renderOrderPages();
       window.addEventListener("storage", refresh);
       window.addEventListener("bakery:data-changed", refresh);
     } catch (error) {

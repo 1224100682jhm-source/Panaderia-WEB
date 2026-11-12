@@ -45,12 +45,12 @@
     <!-- Encabezado de éxito -->
     <section class="bg-white border border-borde rounded-xl shadow-sm p-8 text-center">
       <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 grid place-items-center text-3xl">✓</div>
-      <h1 class="text-2xl font-bold text-cafe mt-4">¡Gracias, Javier! Tu pago fue aprobado</h1>
-      <p class="text-sm text-stone-500 mt-1">Ya estamos preparando tu pedido. Te enviamos el ticket a <strong>tucorreo@ejemplo.com</strong>.</p>
+      <h1 data-confirmation-title class="text-2xl font-bold text-cafe mt-4">¡Gracias, Javier! Tu pago fue aprobado</h1>
+      <p class="text-sm text-stone-500 mt-1">Ya estamos preparando tu pedido. Te enviamos el ticket a <strong data-order-email>tucorreo@ejemplo.com</strong>.</p>
 
       <div class="mt-6 inline-block rounded-xl border-2 border-dashed border-miel bg-miel-claro/60 px-8 py-4">
         <p class="text-xs font-semibold uppercase tracking-wide text-miel-oscuro">Identificador del pedido</p>
-        <p class="text-3xl font-extrabold text-cafe tracking-wide">#ORD-1049</p>
+        <p data-order-number class="text-3xl font-extrabold text-cafe tracking-wide">#ORD-1049</p>
         <p class="text-xs text-stone-500 mt-1">Guárdalo para consultar tu pedido</p>
       </div>
     </section>
@@ -76,15 +76,11 @@
         </div>
       </div>
 
-      <ul class="divide-y divide-borde text-sm border-t border-borde">
-        <li class="py-3 flex justify-between"><span>5× Concha de Vainilla</span><span class="font-medium">$75.00</span></li>
-        <li class="py-3 flex justify-between"><span>2× Baguette Tradicional</span><span class="font-medium">$60.00</span></li>
-        <li class="py-3 flex justify-between"><span>1× Pastel de Tres Leches</span><span class="font-medium">$220.00</span></li>
-      </ul>
+      <ul data-order-summary class="divide-y divide-borde text-sm border-t border-borde"></ul>
       <dl class="pt-4 border-t border-borde space-y-2 text-sm">
-        <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd>$355.00</dd></div>
-        <div class="flex justify-between"><dt class="text-stone-500">Envío</dt><dd>$35.00</dd></div>
-        <div class="flex justify-between text-base font-bold text-cafe pt-2"><dt>Total pagado</dt><dd>$390.00</dd></div>
+        <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd data-order-subtotal>$355.00</dd></div>
+        <div class="flex justify-between"><dt class="text-stone-500">Envío</dt><dd data-order-shipping>$35.00</dd></div>
+        <div class="flex justify-between text-base font-bold text-cafe pt-2"><dt>Total pagado</dt><dd data-order-total>$390.00</dd></div>
       </dl>
     </section>
 
