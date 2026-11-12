@@ -18,7 +18,7 @@
                 <a href="promociones.html" class="text-stone-600 hover:text-[#D97706]">Promociones 🏷️</a>
             </nav>
             <a href="carrito.html" class="flex items-center gap-2 rounded-lg bg-[#D97706] px-4 py-2 text-sm font-semibold text-white">
-                🛒 Mi Carrito <span class="bg-white text-[#D97706] text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+                🛒 Mi Carrito <span data-cart-count class="bg-white text-[#D97706] text-xs font-bold px-2 py-0.5 rounded-full">0</span>
             </a>
         </div>
     </header>
@@ -27,12 +27,13 @@
         <h1 class="text-3xl font-extrabold text-[#512B11] mb-6">Categorías de Productos</h1>
 
         <div class="flex flex-wrap gap-3 mb-8">
-            <button class="bg-[#D97706] text-white px-4 py-2 rounded-lg text-xs font-bold">Todas</button>
-            <button class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">🥐 Pan Dulce</button>
-            <button class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">🥖 Pan Salado</button>
-            <button class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">🍰 Repostería</button>
-            <button class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">☕ Bebidas</button>
+            <button data-filter="" class="bg-[#D97706] text-white px-4 py-2 rounded-lg text-xs font-bold">Todas</button>
+            <button data-filter="Pan dulce" class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">🥐 Pan Dulce</button>
+            <button data-filter="Pan salado" class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">🥖 Pan Salado</button>
+            <button data-filter="Pasteles" class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">🍰 Repostería</button>
+            <button data-filter="Bebidas" class="bg-white border border-[#F3E8C9] px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#FEF3C7]">☕ Bebidas</button>
         </div>
+        <section data-product-list class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
     </main>
 </body>
 </html>

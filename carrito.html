@@ -11,28 +11,19 @@
     <header class="bg-[#FFFDF5] border-b border-[#F3E8C9] p-4">
         <div class="mx-auto max-w-5xl flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-[#8B4513]">🥐 Dulces Delicias</a>
-            <a href="catalogo.html" class="text-xs font-bold text-[#D97706]">← Seguir Comprando</a>
+            <div class="flex items-center gap-3"><span class="text-xs text-stone-500">Productos: <b data-cart-count>0</b></span><a href="catalogo.html" class="text-xs font-bold text-[#D97706]">← Seguir Comprando</a></div>
         </div>
     </header>
 
     <main class="mx-auto max-w-4xl px-4 py-8 flex-1 w-full">
         <h1 class="text-2xl font-extrabold text-[#512B11] mb-6">Tu Carrito de Compras</h1>
 
-        <div class="bg-white p-4 rounded-xl border border-[#F3E8C9] mb-4 flex items-center justify-between">
-            <div>
-                <h3 class="font-bold text-stone-800 text-sm">Concha de Vainilla</h3>
-                <p class="text-xs text-stone-500">$15.30 c/u</p>
-            </div>
-            <div class="flex items-center gap-2">
-                <input type="number" value="3" min="1" class="w-12 border border-stone-300 rounded text-center text-xs font-bold p-1">
-                <span class="font-bold text-[#D97706] text-sm">$45.90</span>
-            </div>
-        </div>
+        <div data-cart-list></div>
 
         <div class="bg-[#FFFDF5] p-5 rounded-xl border border-[#F3E8C9] text-right mt-6">
             <p class="text-xs text-stone-500">Total acumulado:</p>
-            <p class="text-2xl font-black text-[#D97706]">$45.90</p>
-            <a href="checkout.html" class="inline-block mt-4 bg-[#D97706] text-white text-xs font-bold px-6 py-3 rounded-lg shadow">Proceder al Checkout →</a>
+            <p data-cart-total class="text-2xl font-black text-[#D97706]">$0.00</p>
+            <a href="acceso.html" class="inline-block mt-4 bg-[#D97706] text-white text-xs font-bold px-6 py-3 rounded-lg shadow">Proceder al Checkout →</a>
         </div>
     </main>
 </body>
