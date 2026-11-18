@@ -18,6 +18,9 @@
     { id: "PD-020", name: "Pan de muerto", category: "Pan dulce", price: 32, cost: 14, description: "Pan de temporada aromático y esponjoso.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop", stock: 12, visible: true, season: true },
     { id: "PD-005", name: "Croissant de mantequilla", category: "Pan dulce", price: 28, cost: 13, description: "Hojaldrado artesanal preparado con mantequilla.", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=600&auto=format&fit=crop", stock: 0, visible: true, season: false }
   ];
+  const storePromotions = [
+    { name: "2x1 en conchas", type: "2x1", productId: "PD-001", description: "Lleva dos conchas de vainilla por el precio de una." }
+  ];
 
   function read(key, fallback) {
     const raw = localStorage.getItem(key);
@@ -88,6 +91,25 @@
     });
     container.innerHTML = list.length ? list.map(productCard).join("") : '<p class="text-stone-500">No hay productos disponibles en esta categoría.</p>';
     bindAddButtons(container);
+  }
+  function renderStorePromotions() {
+    const container = document.querySelector("[data-promotion-list]");
+    if (!container) return;
+    const available = storePromotions.map(function (promotion) {
+      const product = products().find(function (item) { return item.id === promotion.productId; });
+      return product && product.visible && product.stock > 0 ? { promotion: promotion, product: product } : null;
+    }).filter(Boolean);
+    container.innerHTML = available.length ? available.map(function (entry) {
+      return '<article class="bg-white rounded-2xl border border-[#F3E8C9] overflow-hidden shadow-sm">' +
+        '<a href="producto-detalle.html?id=' + encodeURIComponent(entry.product.id) + '" class="block h-48 bg-stone-100">' +
+        '<img src="' + escapeText(entry.product.image || "") + '" alt="' + escapeText(entry.product.name) + '" class="w-full h-full object-cover"></a>' +
+        '<div class="p-5"><span class="inline-block rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">' +
+        escapeText(entry.promotion.type) + '</span><h2 class="mt-3 font-bold text-lg text-[#512B11]">' +
+        escapeText(entry.promotion.name) + '</h2><p class="mt-2 text-sm text-stone-600">' +
+        escapeText(entry.promotion.description) + '</p><p class="mt-3 text-xs text-stone-500">Producto: ' +
+        escapeText(entry.product.name) + '</p><a href="producto-detalle.html?id=' + encodeURIComponent(entry.product.id) +
+        '" class="mt-4 inline-block text-sm font-bold text-[#D97706] hover:underline">Ver producto</a></div></article>';
+    }).join("") : '<p class="text-stone-500">Por el momento no hay promociones disponibles.</p>';
   }
   function bindCategoryFilters() {
     const buttons = document.querySelectorAll("[data-filter]");
@@ -412,6 +434,7 @@
     products();
     renderCartBadge();
     renderStoreCatalog();
+    renderStorePromotions();
     renderCartPage();
     renderSummary();
     renderAdminCatalog();
