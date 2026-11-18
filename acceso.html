@@ -58,10 +58,10 @@
         <article class="bg-white border border-borde rounded-xl p-6 shadow-sm">
           <h2 class="text-lg font-bold text-cafe">Ya tengo cuenta</h2>
           <p class="text-sm text-stone-500 mb-4">Inicia sesión para autocompletar tus datos y ver tu historial.</p>
-          <form data-customer-login class="space-y-4">
+          <form data-customer-login autocomplete="off" class="space-y-4">
             <div>
               <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1" for="email">Correo electrónico</label>
-              <input id="email" type="email" placeholder="tucorreo@ejemplo.com"
+              <input id="email" type="email" autocomplete="off" placeholder="tucorreo@ejemplo.com"
                 class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             </div>
             <div>
@@ -69,7 +69,7 @@
                 <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500" for="pass">Contraseña</label>
                 <a href="#" class="text-xs text-miel-oscuro hover:underline">¿La olvidaste?</a>
               </div>
-              <input id="pass" type="password" placeholder="••••••••"
+              <input id="pass" type="password" autocomplete="off" placeholder="••••••••"
                 class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             </div>
             <p data-customer-login-error role="alert" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
