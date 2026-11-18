@@ -391,13 +391,13 @@
   }
   function initializeAdminAuth() {
     const page = location.pathname.split("/").pop();
-    const isAdminPage = /^admin-/.test(page) && page !== "admin-login.html";
+    const isAdminPage = /^admin-/.test(page);
     if (isAdminPage && localStorage.getItem(ADMIN_SESSION_KEY) !== "active") {
-      location.replace("admin-login.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
+      location.replace("iniciar_sesion.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
       return false;
     }
 
-    if (page === "admin-login.html") {
+    if (page === "iniciar_sesion.html") {
       const form = document.querySelector("[data-admin-login]");
       if (form) {
         form.addEventListener("submit", function (event) {
@@ -430,6 +430,20 @@
     });
     return true;
   }
+  function initializeCustomerLogin() {
+    const form = document.querySelector("[data-customer-login]");
+    if (!form) return;
+
+    form.addEventListener("submit", function (event) {
+      const email = form.querySelector("#email").value.trim().toLowerCase();
+      if (email !== ADMIN_EMAIL) return;
+
+      event.preventDefault();
+      const error = form.querySelector("[data-customer-login-error]");
+      error.textContent = "El usuario no existe.";
+      error.classList.remove("hidden");
+    });
+  }
   function refresh() {
     products();
     renderCartBadge();
@@ -444,6 +458,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     try {
       if (!initializeAdminAuth()) return;
+      initializeCustomerLogin();
       fixAdminLinks();
       bindAdminCatalogForm();
       bindAdminPrices();
