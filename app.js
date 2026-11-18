@@ -355,22 +355,21 @@
   }
   function fixAdminLinks() {
     const paths = { "dashboard.html": "admin-dashboard.html", "catalogo.html": "admin-catalogo.html", "precios.html": "admin-precios.html",
-      "inventario.html": "admin-inventario.html", "personal.html": "admin-personal.html", "reportes.html": "admin-reportes.html", "caja.html": "admin-caja.html",
-      "historial_reportes.html": "admin-reportes.html", "03-pago.html": "pago.html", "checkout.html": "acceso.html" };
-    const isAdminPage = /^admin-/.test(location.pathname.split("/").pop()) || location.pathname.endsWith("auditoria.html");
+      "inventario.html": "admin-inventario.html", "personal.html": "admin-personal.html", "03-pago.html": "pago.html", "checkout.html": "acceso.html" };
+    const isAdminPage = /^admin-/.test(location.pathname.split("/").pop());
     document.querySelectorAll('a[href]').forEach(function (link) {
       const target = link.getAttribute("href");
       if (!target || target.startsWith("#")) return;
       const hash = target.indexOf("#") >= 0 ? target.slice(target.indexOf("#")) : "";
       const file = target.split("#")[0];
-      if ((isAdminPage || file === "historial_reportes.html" || file === "03-pago.html" || file === "checkout.html") && paths[file]) {
+      if ((isAdminPage || file === "03-pago.html" || file === "checkout.html") && paths[file]) {
         link.href = paths[file] + hash;
       }
     });
   }
   function initializeAdminAuth() {
     const page = location.pathname.split("/").pop();
-    const isAdminPage = (/^admin-/.test(page) && page !== "admin-login.html") || page === "auditoria.html";
+    const isAdminPage = /^admin-/.test(page) && page !== "admin-login.html";
     if (isAdminPage && localStorage.getItem(ADMIN_SESSION_KEY) !== "active") {
       location.replace("admin-login.html?returnTo=" + encodeURIComponent(page + location.search + location.hash));
       return false;
@@ -391,7 +390,7 @@
           }
           localStorage.setItem(ADMIN_SESSION_KEY, "active");
           const requestedPage = new URLSearchParams(location.search).get("returnTo");
-          const safePage = requestedPage && /^(admin-(?!login\.html)[\w-]+\.html|auditoria\.html)(?:[?#].*)?$/.test(requestedPage)
+          const safePage = requestedPage && /^admin-(?!login\.html)[\w-]+\.html(?:[?#].*)?$/.test(requestedPage)
             ? requestedPage
             : "admin-dashboard.html";
           location.replace(safePage);
