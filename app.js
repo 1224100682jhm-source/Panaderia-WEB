@@ -113,12 +113,31 @@
   }
   function bindCategoryFilters() {
     const buttons = document.querySelectorAll("[data-filter]");
+    const container = document.querySelector("[data-product-list]");
+    function selectCategory(filter, updateUrl) {
+      const selectedButton = Array.from(buttons).find(function (button) {
+        return button.dataset.filter.toLowerCase() === filter.toLowerCase();
+      }) || Array.from(buttons).find(function (button) { return !button.dataset.filter; });
+      if (!selectedButton) return;
+      if (container) container.dataset.category = selectedButton.dataset.filter;
+      buttons.forEach(function (button) {
+        button.classList.remove("bg-[#D97706]", "text-white", "font-bold", "border-[#D97706]", "hover:bg-[#B45309]");
+        button.classList.add("bg-white", "border-[#F3E8C9]", "font-medium", "hover:bg-[#FEF3C7]");
+      });
+      selectedButton.classList.remove("bg-white", "border-[#F3E8C9]", "font-medium", "hover:bg-[#FEF3C7]");
+      selectedButton.classList.add("bg-[#D97706]", "text-white", "font-bold", "border-[#D97706]", "hover:bg-[#B45309]");
+      if (updateUrl) {
+        const query = selectedButton.dataset.filter
+          ? "?categoria=" + encodeURIComponent(selectedButton.dataset.filter)
+          : "";
+        history.replaceState(null, "", location.pathname + query + location.hash);
+      }
+    }
+
+    selectCategory(new URLSearchParams(location.search).get("categoria") || "", false);
     buttons.forEach(function (button) {
       button.addEventListener("click", function () {
-        const container = document.querySelector("[data-product-list]");
-        if (container) container.dataset.category = button.dataset.filter;
-        buttons.forEach(function (item) { item.classList.remove("bg-[#D97706]", "text-white", "font-bold"); });
-        button.classList.add("bg-[#D97706]", "text-white", "font-bold");
+        selectCategory(button.dataset.filter, true);
         renderStoreCatalog();
       });
     });
