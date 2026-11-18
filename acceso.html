@@ -61,7 +61,7 @@
           <form data-customer-login autocomplete="off" class="space-y-4">
             <div>
               <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1" for="email">Correo electrónico</label>
-              <input id="email" type="email" autocomplete="off" placeholder="tucorreo@ejemplo.com"
+              <input id="email" type="email" autocomplete="username" placeholder="tucorreo@ejemplo.com" required
                 class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             </div>
             <div>
@@ -69,13 +69,14 @@
                 <label class="block text-xs font-semibold uppercase tracking-wide text-stone-500" for="pass">Contraseña</label>
                 <a href="#" class="text-xs text-miel-oscuro hover:underline">¿La olvidaste?</a>
               </div>
-              <input id="pass" type="password" autocomplete="off" placeholder="••••••••"
+              <input id="pass" type="password" autocomplete="current-password" placeholder="••••••••" required
                 class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-miel focus:border-miel">
             </div>
             <p data-customer-login-error role="alert" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
+            <p class="text-xs text-stone-500">Cuenta de demostración: jose@gmail.com · prueba123</p>
             <button type="submit" class="w-full bg-miel hover:bg-miel-oscuro text-white font-semibold rounded-lg py-2.5 text-sm transition">Iniciar sesión y continuar</button>
           </form>
-          <p class="text-xs text-stone-500 mt-4 text-center">¿Eres nuevo? <a href="#" class="text-miel-oscuro font-semibold hover:underline">Crear cuenta</a></p>
+          <p class="text-xs text-stone-500 mt-4 text-center">¿Eres nuevo? <a href="crear_cuenta.html" class="text-miel-oscuro font-semibold hover:underline">Crear cuenta</a></p>
         </article>
 
         <!-- Invitado -->

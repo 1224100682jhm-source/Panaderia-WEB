@@ -9,8 +9,10 @@
     currentOrder: "dulces-delicias-current-order"
   };
   const ADMIN_SESSION_KEY = "dulces-delicias-admin-session";
+  const CUSTOMER_SESSION_KEY = "dulces-delicias-customer-session";
   const ADMIN_EMAIL = "admin@dulcesdelicias.com";
   const ADMIN_PASSWORD = "Admin123!";
+  const DEMO_CUSTOMER = { email: "jose@gmail.com", password: "prueba123", name: "José" };
   const seedProducts = [
     { id: "PD-001", name: "Concha de vainilla", category: "Pan dulce", price: 15, cost: 6.5, description: "Concha tradicional, suave y recién horneada.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop", stock: 30, visible: true, season: false },
     { id: "PS-004", name: "Baguette tradicional", category: "Pan salado", price: 25, cost: 11, description: "Corteza crujiente y miga suave con masa madre.", image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=600&auto=format&fit=crop", stock: 20, visible: true, season: false },
@@ -197,10 +199,18 @@
     if (!form) return;
     if (location.pathname.endsWith("contacto-entrega.html")) {
       const saved = read(KEYS.customer, {});
-      Object.keys(saved).forEach(function (name) {
-        const field = form.elements.namedItem(name);
-        if (field && field.type !== "radio") field.value = saved[name];
-      });
+      const sessionEmail = localStorage.getItem(CUSTOMER_SESSION_KEY);
+      if (sessionEmail || String(saved.correo || "").trim().toLowerCase() !== DEMO_CUSTOMER.email) {
+        Object.keys(saved).forEach(function (name) {
+          const field = form.elements.namedItem(name);
+          if (field && field.type !== "radio") field.value = saved[name];
+        });
+      }
+      const emailField = form.elements.namedItem("correo");
+      if (sessionEmail && emailField) {
+        emailField.value = sessionEmail;
+        emailField.readOnly = true;
+      }
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         if (!cartLines().length) {
@@ -275,6 +285,86 @@
       return "<tr><td class=\"py-0.5\">" + item.quantity + "</td><td>" + escapeText(item.name) +
         '</td><td class="text-right">' + money(item.price * item.quantity) + "</td></tr>";
     }).join("");
+  }
+  function formatDelivery(customer) {
+    if (customer.entrega === "recogida") {
+      return {
+        type: "Recogida en tienda",
+        address: [customer.sucursal, customer.horario].filter(Boolean).join(" · ")
+      };
+    }
+
+    const street = [customer.calle, customer.numeroExterior && "Núm. " + customer.numeroExterior,
+      customer.numeroInterior && "Int. " + customer.numeroInterior].filter(Boolean).join(" ");
+    const address = [street, customer.colonia, customer.codigoPostal].filter(Boolean).join(", ");
+    return address ? { type: "Envío a domicilio", address: address } : null;
+  }
+  function renderProfilePage() {
+    const ordersContainer = document.querySelector("[data-profile-orders]");
+    if (!ordersContainer) return;
+
+    const email = String(localStorage.getItem(CUSTOMER_SESSION_KEY) || "").trim().toLowerCase();
+    const savedCustomer = read(KEYS.customer, {});
+    const customer = String(savedCustomer.correo || "").trim().toLowerCase() === email
+      ? savedCustomer
+      : { nombre: DEMO_CUSTOMER.name, correo: email };
+    const name = customer.nombre || "Mi cuenta";
+    document.querySelector("[data-profile-name]").textContent = name;
+    document.querySelector("[data-profile-email]").textContent = email || "Agrega tus datos al realizar una compra";
+    document.querySelector("[data-profile-detail-name]").textContent = customer.nombre || "Sin registrar";
+    document.querySelector("[data-profile-detail-email]").textContent = customer.correo || "Sin registrar";
+    document.querySelector("[data-profile-phone]").textContent = customer.telefono || "Sin registrar";
+
+    const orders = email ? read(KEYS.orders, []).filter(function (order) {
+      return String(order.customer && order.customer.correo || "").trim().toLowerCase() === email;
+    }).sort(function (first, second) {
+      return new Date(second.createdAt).getTime() - new Date(first.createdAt).getTime();
+    }) : [];
+
+    ordersContainer.innerHTML = orders.length ? orders.map(function (order) {
+      const createdAt = new Date(order.createdAt);
+      const date = Number.isNaN(createdAt.getTime())
+        ? "Fecha no disponible"
+        : new Intl.DateTimeFormat("es-MX", { dateStyle: "medium", timeStyle: "short" }).format(createdAt);
+      const delivery = formatDelivery(order.customer || {});
+      const items = Array.isArray(order.items) ? order.items : [];
+      return '<article class="rounded-xl border border-[#F3E8C9] p-4">' +
+        '<div class="flex flex-wrap items-start justify-between gap-3"><div><p class="font-bold text-[#512B11]">#' +
+        escapeText(order.id || "Pedido") + '</p><p class="mt-1 text-xs text-stone-500">' + escapeText(date) +
+        '</p></div><span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">' +
+        escapeText(order.status || "En proceso") + '</span></div>' +
+        (delivery ? '<p class="mt-3 text-sm text-stone-600">' + escapeText(delivery.type) +
+          (delivery.address ? " · " + escapeText(delivery.address) : "") + "</p>" : "") +
+        '<div class="mt-3 flex items-center justify-between gap-3 border-t border-[#F3E8C9] pt-3">' +
+        '<details class="text-sm"><summary class="cursor-pointer font-medium text-amber-700">Ver ' +
+        items.length + (items.length === 1 ? " producto" : " productos") + '</summary><ul class="mt-2 space-y-1 text-xs text-stone-600">' +
+        items.map(function (item) {
+          return "<li>" + escapeText(item.quantity) + "× " + escapeText(item.name) + "</li>";
+        }).join("") + '</ul></details><strong class="text-[#512B11]">' + money(order.total) + "</strong></div></article>";
+    }).join("") : '<p class="rounded-xl bg-stone-50 p-5 text-sm text-stone-500">' +
+      (email ? "Aún no hay pedidos asociados a este correo." : "Tus pedidos aparecerán aquí después de realizar una compra con tu correo.") +
+      "</p>";
+
+    const addressContainer = document.querySelector("[data-profile-addresses]");
+    if (!addressContainer) return;
+    const addresses = [];
+    function addAddress(data, label) {
+      const delivery = formatDelivery(data);
+      if (!delivery || !delivery.address) return;
+      const key = (delivery.type + delivery.address).toLowerCase();
+      if (addresses.some(function (item) { return item.key === key; })) return;
+      addresses.push({ key: key, type: delivery.type, address: delivery.address, label: label });
+    }
+    if (email) addAddress(customer, "Datos recientes");
+    orders.forEach(function (order) { addAddress(order.customer || {}, "Usada en un pedido"); });
+    addressContainer.innerHTML = addresses.length ? addresses.map(function (item) {
+      return '<article class="rounded-xl border border-[#F3E8C9] bg-[#FFFDF5] p-4">' +
+        '<p class="text-xs font-semibold uppercase tracking-wide text-amber-700">' + escapeText(item.label) +
+        '</p><h3 class="mt-2 font-bold text-[#512B11]">' + escapeText(item.type) +
+        '</h3><p class="mt-1 text-sm text-stone-600">' + escapeText(item.address) + "</p></article>";
+    }).join("") : '<p class="rounded-xl bg-stone-50 p-5 text-sm text-stone-500 sm:col-span-2">' +
+      "Aún no hay direcciones guardadas. Completa los datos de entrega al realizar una compra." +
+      "</p>";
   }
   function renderAdminCatalog() {
     const tbody = document.querySelector("[data-admin-products]");
@@ -424,17 +514,21 @@
           const email = form.elements.namedItem("email").value.trim().toLowerCase();
           const password = form.elements.namedItem("password").value;
           const error = document.querySelector("[data-login-error]");
-          if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+          if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+            localStorage.removeItem(CUSTOMER_SESSION_KEY);
+            localStorage.setItem(ADMIN_SESSION_KEY, "active");
+            const requestedPage = new URLSearchParams(location.search).get("returnTo");
+            const safePage = requestedPage && /^admin-(?!login\.html)[\w-]+\.html(?:[?#].*)?$/.test(requestedPage)
+              ? requestedPage
+              : "admin-dashboard.html";
+            location.replace(safePage);
+          } else if (email === DEMO_CUSTOMER.email && password === DEMO_CUSTOMER.password) {
+            startCustomerSession();
+            location.replace("perfil.html");
+          } else {
             error.textContent = "Correo o contraseña incorrectos.";
             error.classList.remove("hidden");
-            return;
           }
-          localStorage.setItem(ADMIN_SESSION_KEY, "active");
-          const requestedPage = new URLSearchParams(location.search).get("returnTo");
-          const safePage = requestedPage && /^admin-(?!login\.html)[\w-]+\.html(?:[?#].*)?$/.test(requestedPage)
-            ? requestedPage
-            : "admin-dashboard.html";
-          location.replace(safePage);
         });
       }
 
@@ -449,34 +543,92 @@
     });
     return true;
   }
+  function startCustomerSession() {
+    localStorage.removeItem(ADMIN_SESSION_KEY);
+    localStorage.setItem(CUSTOMER_SESSION_KEY, DEMO_CUSTOMER.email);
+    const saved = read(KEYS.customer, {});
+    if (String(saved.correo || "").trim().toLowerCase() !== DEMO_CUSTOMER.email) {
+      write(KEYS.customer, { nombre: DEMO_CUSTOMER.name, correo: DEMO_CUSTOMER.email, telefono: "" });
+    }
+  }
+  function initializeCustomerSession() {
+    const page = location.pathname.split("/").pop();
+    if (page === "perfil.html" && localStorage.getItem(CUSTOMER_SESSION_KEY) !== DEMO_CUSTOMER.email) {
+      location.replace("iniciar_sesion.html?returnTo=perfil.html");
+      return false;
+    }
+
+    document.querySelectorAll("[data-customer-logout]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        localStorage.removeItem(CUSTOMER_SESSION_KEY);
+        location.replace("index.html");
+      });
+    });
+    return true;
+  }
   function initializeCustomerLogin() {
     const form = document.querySelector("[data-customer-login]");
     if (!form) return;
 
     form.addEventListener("submit", function (event) {
-      const email = form.querySelector("#email").value.trim().toLowerCase();
-      if (email !== ADMIN_EMAIL) return;
-
       event.preventDefault();
+      const email = form.querySelector("#email").value.trim().toLowerCase();
       const error = form.querySelector("[data-customer-login-error]");
-      error.textContent = "El usuario no existe.";
+      const password = form.querySelector("#pass").value;
+      if (email === DEMO_CUSTOMER.email && password === DEMO_CUSTOMER.password) {
+        startCustomerSession();
+        location.href = "contacto-entrega.html";
+        return;
+      }
+      error.textContent = "Correo o contraseña incorrectos.";
       error.classList.remove("hidden");
     });
+  }
+  function renderCustomerHeader() {
+    const isCustomerLoggedIn = localStorage.getItem(CUSTOMER_SESSION_KEY) === DEMO_CUSTOMER.email;
+    document.querySelectorAll("[data-customer-login-link]").forEach(function (link) {
+      link.classList.toggle("hidden", isCustomerLoggedIn);
+    });
+    document.querySelectorAll("[data-customer-profile-link]").forEach(function (link) {
+      link.classList.toggle("hidden", !isCustomerLoggedIn);
+    });
+  }
+  function renderCheckoutIdentity() {
+    const name = document.querySelector("[data-checkout-customer]");
+    const link = document.querySelector("[data-checkout-account-link]");
+    if (!name || !link) return;
+
+    const sessionEmail = localStorage.getItem(CUSTOMER_SESSION_KEY);
+    if (sessionEmail === DEMO_CUSTOMER.email) {
+      const customer = read(KEYS.customer, {});
+      const customerEmail = String(customer.correo || "").trim().toLowerCase();
+      name.textContent = customerEmail === sessionEmail ? customer.nombre || DEMO_CUSTOMER.name : DEMO_CUSTOMER.name;
+      link.href = "perfil.html";
+      link.textContent = "Mi perfil";
+    } else {
+      name.textContent = "invitado";
+      link.href = "acceso.html";
+      link.textContent = "cambiar";
+    }
   }
   function refresh() {
     products();
     renderCartBadge();
+    renderCustomerHeader();
+    renderCheckoutIdentity();
     renderStoreCatalog();
     renderStorePromotions();
     renderCartPage();
     renderSummary();
     renderAdminCatalog();
     renderProductDetail();
+    renderProfilePage();
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     try {
       if (!initializeAdminAuth()) return;
+      if (!initializeCustomerSession()) return;
       initializeCustomerLogin();
       fixAdminLinks();
       bindAdminCatalogForm();
